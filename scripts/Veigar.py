@@ -1,6 +1,3 @@
-import pymeow
-from models import Spell
-from resources import LeagueReader
 from utils import calculate
 
 # Define script specific settings
@@ -10,9 +7,10 @@ scriptSettings: dict = {
 
 
 class Veigar:
-    def __init__(self, lReader: LeagueReader):
+    def __init__(self, lReader, pymeow):
         self.lReader = lReader
-        self.font = pymeow.font_init(20, "ComicSans")
+        self.pymeow = pymeow
+        self.font = self.pymeow.font_init(20, "ComicSans")
 
         # Run script functions based on script settings
         if scriptSettings['RExecuteESP']:
@@ -24,7 +22,7 @@ class Veigar:
             return
 
         # Get Veigar's Ult
-        ult_spell: Spell = None
+        ult_spell = None
         for spell in self.lReader.localPlayer.spells:
             if spell.name == 'VeigarR':
                 ult_spell = spell
@@ -54,14 +52,14 @@ class Veigar:
             totalDamage: float = calculate.calculate_magic_damage(self.lReader.localPlayer, enemy, beforeResistDmg)
 
             if enemy.health <= totalDamage and ult_spell.readyIn == 0:
-                pymeow.circle(
+                self.pymeow.circle(
                     enemy.screenPos['x'],
                     enemy.screenPos['y'],
                     30,
-                    pymeow.rgb('red'),
+                    self.pymeow.rgb('red'),
                     True,
                     1
                 )
-                pymeow.font_print(self.font, enemy.screenPos['x'] - 10,
-                                  enemy.screenPos['y'],
-                                  "R", pymeow.rgb('white'))
+                self.pymeow.font_print(self.font, enemy.screenPos['x'] - 10,
+                                       enemy.screenPos['y'],
+                                       "R", self.pymeow.rgb('white'))

@@ -22,13 +22,17 @@ class LeagueReader:
         heroManagerAddr: int = self.pm.read_int(self.pm.base_address + offsets.oHeroManager)
         allChampAddrs: list[int] = StructureReader.read_v_table(self.pm, heroManagerAddr)
 
-        teamPlayers: list[PlayerEntity] = []
-        enemyPlayers: list[PlayerEntity] = []
-        for playerAddr in allChampAddrs:
-            player: PlayerEntity = PlayerEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix, playerAddr)
-            if player.teamId == self.localPlayer.teamId:
-                teamPlayers.append(player)
-            else:
-                enemyPlayers.append(player)
+        teamPlayers, enemyPlayers = [], []
+        i: int = 0
+        while i < len(allChampAddrs):
+            isVisible: bool = self.pm.read_bool(allChampAddrs[i] + offsets.oObjVisible)
+            if isVisible:
+                player: PlayerEntity = PlayerEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix,
+                                                    allChampAddrs[i])
+                if player.teamId == self.localPlayer.teamId:
+                    teamPlayers.append(player)
+                else:
+                    enemyPlayers.append(player)
+            i += 1
 
         return teamPlayers, enemyPlayers

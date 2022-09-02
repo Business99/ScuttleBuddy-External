@@ -20,6 +20,7 @@ oObjHealth: int = 0x0E74
 oObjMaxHealth: int = 0x0E84
 oObjMana: int = 0x029C
 oObjMaxMana: int = 0x02AC
+oObjVisible: int = 0x0274
 
 # Player Stats
 statBase: int = 0x1270

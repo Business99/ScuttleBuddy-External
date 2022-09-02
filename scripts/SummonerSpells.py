@@ -1,16 +1,46 @@
-import pymeow
-from resources import LeagueReader, constants
-
 # Define script specific settings
 scriptSettings: dict = {
     'SummonerSpellESP': True
 }
 
+SUMMONER_SPELL_FP = 'D:\\Hacking\\ScuttlePy\\datadragon\\summonerSpells\\'
+
+
+def onTick(lReader, pymeow):
+    font = pymeow.font_init(20, "ComicSans")
+
+    for ePlayer in lReader.enemyPlayers:
+        if not ePlayer.isVisible:
+            continue
+
+        i = 0
+        for sumSpell in ePlayer.spells:
+            if sumSpell.isSummoner:
+
+                texture = pymeow.load_texture(
+                    f"{SUMMONER_SPELL_FP}{sumSpell.name}.png")
+
+                if i == 0:
+                    pymeow.draw_texture(texture, ePlayer.screenPos['x'] - 60,
+                                        ePlayer.screenPos['y'] - 50, 30, 30)
+                    pymeow.font_print(font, ePlayer.screenPos['x'] - 60,
+                                      ePlayer.screenPos['y'] - 70,
+                                      str(int(sumSpell.readyIn)), pymeow.rgb('white'))
+                    i += 1
+                else:
+                    pymeow.draw_texture(texture, ePlayer.screenPos['x'] - 15,
+                                        ePlayer.screenPos['y'] - 50, 30, 30)
+                    pymeow.font_print(font, ePlayer.screenPos['x'] - 15,
+                                      ePlayer.screenPos['y'] - 70,
+                                      str(int(sumSpell.readyIn)), pymeow.rgb('white'))
+                    i = 0
+
 
 class SummonerSpells:
-    def __init__(self, lReader: LeagueReader):
+    def __init__(self, lReader, pymeow):
         self.lReader = lReader
-        self.font = pymeow.font_init(20, "ComicSans")
+        self.pymeow = pymeow
+        self.font = self.pymeow.font_init(20, "ComicSans")
 
         # Run script functions based on script settings
         if scriptSettings['SummonerSpellESP']:
@@ -25,20 +55,20 @@ class SummonerSpells:
             for sumSpell in ePlayer.spells:
                 if sumSpell.isSummoner:
 
-                    texture = pymeow.load_texture(
-                        f"{constants.SUMMONER_SPELL_FP}{sumSpell.name}.png")
+                    texture = self.pymeow.load_texture(
+                        f"{SUMMONER_SPELL_FP}{sumSpell.name}.png")
 
                     if i == 0:
-                        pymeow.draw_texture(texture, ePlayer.screenPos['x'] - 60,
-                                            ePlayer.screenPos['y'] - 50, 30, 30)
-                        pymeow.font_print(self.font, ePlayer.screenPos['x'] - 60,
-                                          ePlayer.screenPos['y'] - 70,
-                                          str(int(sumSpell.readyIn)), pymeow.rgb('white'))
+                        self.pymeow.draw_texture(texture, ePlayer.screenPos['x'] - 60,
+                                                 ePlayer.screenPos['y'] - 50, 30, 30)
+                        self.pymeow.font_print(self.font, ePlayer.screenPos['x'] - 60,
+                                               ePlayer.screenPos['y'] - 70,
+                                               str(int(sumSpell.readyIn)), self.pymeow.rgb('white'))
                         i += 1
                     else:
-                        pymeow.draw_texture(texture, ePlayer.screenPos['x'] - 15,
-                                            ePlayer.screenPos['y'] - 50, 30, 30)
-                        pymeow.font_print(self.font, ePlayer.screenPos['x'] - 15,
-                                          ePlayer.screenPos['y'] - 70,
-                                          str(int(sumSpell.readyIn)), pymeow.rgb('white'))
+                        self.pymeow.draw_texture(texture, ePlayer.screenPos['x'] - 15,
+                                                 ePlayer.screenPos['y'] - 50, 30, 30)
+                        self.pymeow.font_print(self.font, ePlayer.screenPos['x'] - 15,
+                                               ePlayer.screenPos['y'] - 70,
+                                               str(int(sumSpell.readyIn)), self.pymeow.rgb('white'))
                         i = 0

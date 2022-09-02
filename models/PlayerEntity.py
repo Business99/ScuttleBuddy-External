@@ -74,12 +74,18 @@ class PlayerEntity:
         try:
             self.screenPos = pymeow.wts_ogl(self.overlay, self.viewProjMatrix.tolist(), self.gamePos)
         except:
-            self.isVisible = False
+            pass
+
+        self.isVisible = self.pm.read_bool(self.entityAddress + offsets.oObjVisible)
 
         # Handle spells
         spellAddresses: list[int] = []
-        for i in range(0, 6, 1):
-            spellAddresses.append(self.entityAddress + (i * 4))
+        j: int = 0
+        while j <= 5:
+            spellAddresses.append(self.entityAddress + (j * 4))
+            j += 1
 
-        for spellAddr in spellAddresses:
-            self.spells.append(Spell(self.pm, spellAddr))
+        i: int = 0
+        while i < len(spellAddresses):
+            self.spells.append(Spell(self.pm, spellAddresses[i]))
+            i += 1
