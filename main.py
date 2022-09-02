@@ -8,6 +8,7 @@ from scripts import SummonerSpells
 import scripts
 import time
 
+
 if __name__ == '__main__':
     pm: Pymem = Pymem('League of Legends.exe')
     mem = pymeow.process_by_name("League of Legends.exe")

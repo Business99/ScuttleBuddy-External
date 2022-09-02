@@ -2,6 +2,7 @@ import pymeow
 from pymem import Pymem
 from models.Spell import Spell
 from resources import offsets
+from functools import cache
 
 
 class PlayerEntity:
@@ -43,6 +44,7 @@ class PlayerEntity:
 
         self.update()
 
+    @cache
     def update(self):
         nameAddr: int = self.pm.read_int(self.entityAddress + offsets.oObjName)
 

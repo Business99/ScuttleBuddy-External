@@ -4,6 +4,7 @@ scriptSettings: dict = {
 }
 
 SUMMONER_SPELL_FP = 'D:\\Hacking\\ScuttlePy\\datadragon\\summonerSpells\\'
+LAP_SUMMONER_FP = 'C:\\Github\\ScuttleBuddy-External\\datadragon\\summonerSpells\\'
 
 
 def onTick(lReader, pymeow):

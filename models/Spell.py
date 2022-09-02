@@ -1,5 +1,6 @@
 from pymem import Pymem
 from resources import offsets
+from functools import cache
 
 
 class Spell:
@@ -17,6 +18,7 @@ class Spell:
 
         self.update()
 
+    @cache
     def update(self):
         spellSlots: int = self.pm.read_int(self.spellAddr + offsets.oSpellSlots)
         gameTime: float = self.pm.read_float(self.pm.base_address + offsets.oGameTime)
