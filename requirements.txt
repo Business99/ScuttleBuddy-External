@@ -1,0 +1,3 @@
+numpy==1.23.2
+Pymem==1.8.5
+setuptools==63.4.1

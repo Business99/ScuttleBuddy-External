@@ -1,0 +1,1 @@
+SUMMONER_SPELL_FP = 'D:\\Hacking\\ScuttlePy\\datadragon\\summonerSpells\\'

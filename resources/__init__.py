@@ -1,0 +1,2 @@
+from resources.LeagueReader import LeagueReader
+from resources.StructureReader import StructureReader
