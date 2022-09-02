@@ -1,6 +1,9 @@
 # Scuttle Buddy
 ### External Scripting Platform for League of Legends
 
+# Discord
+### [Join our Discord](https://discord.gg/P9VTvGCWBD)
+
 # Installation Instructions
 
 ### From Source:
