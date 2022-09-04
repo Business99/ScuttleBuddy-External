@@ -1,26 +1,25 @@
 from pymem import Pymem
 from models import PlayerEntity
-from resources import offsets
+from resources import offsets, LeagueStorage
 from resources.StructureReader import StructureReader
 
 
 class LeagueReader:
-    def __init__(self, pm: Pymem, mem, overlay, viewProjMatrix):
+    def __init__(self, pm: Pymem, mem, overlay, viewProjMatrix, lStorage):
         self.pm = pm
         self.mem = mem
         self.overlay = overlay
         self.viewProjMatrix = viewProjMatrix
+        self.lStorage: LeagueStorage = lStorage
 
         self.localPlayer: PlayerEntity = self.get_local_player()
         self.teamPlayers, self.enemyPlayers = self.get_players()
 
     def get_local_player(self) -> PlayerEntity:
-        lpAddr: int = self.pm.read_int(self.pm.base_address + offsets.oLocalPlayer)
-        return PlayerEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix, lpAddr)
+        return PlayerEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix, self.lStorage.localPlayerAddr)
 
     def get_players(self) -> tuple[list[PlayerEntity], list[PlayerEntity]]:
-        heroManagerAddr: int = self.pm.read_int(self.pm.base_address + offsets.oHeroManager)
-        allChampAddrs: list[int] = StructureReader.read_v_table(self.pm, heroManagerAddr)
+        allChampAddrs: list[int] = StructureReader.read_v_table(self.pm, self.lStorage.heroManagerAddr)
 
         teamPlayers, enemyPlayers = [], []
         i: int = 0

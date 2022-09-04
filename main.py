@@ -1,7 +1,7 @@
 import threading
 from pymem import Pymem
 import utils
-from resources import LeagueReader
+from resources import LeagueReader, LeagueStorage
 import pymeow
 from utils.settings import SETTINGS
 from scripts import SummonerSpells
@@ -16,6 +16,9 @@ if __name__ == '__main__':
     overlay = pymeow.overlay_init("League of Legends (TM) Client")
     summonerFont = pymeow.font_init(20, "ComicSans")
     view_proj_matrix = utils.find_view_proj_matrix(pm)
+
+    lStorage: LeagueStorage = LeagueStorage(pm)
+
     # pymeow.set_foreground("League of Legends (TM) Client")
 
     ex_times: list = []
@@ -24,11 +27,11 @@ if __name__ == '__main__':
 
         st = time.time()
 
-        lReader: LeagueReader = LeagueReader(pm, mem, overlay, view_proj_matrix)
+        lReader: LeagueReader = LeagueReader(pm, mem, overlay, view_proj_matrix, lStorage)
 
         # Based on global script settings, load the scripts
         if settings['SummonerSpellScript']:
-            SummonerSpells.onTick(lReader, pymeow)
+            SummonerSpells.SummonerSpells(lReader, pymeow)
         if settings['VeigarScript']:
             scripts.Veigar(lReader, pymeow)
 
