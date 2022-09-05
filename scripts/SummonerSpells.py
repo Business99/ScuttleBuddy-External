@@ -19,9 +19,6 @@ class SummonerSpells:
 
     def enemy_summonor_spells(self):
         for ePlayer in self.lReader.enemyPlayers:
-            if not ePlayer.isVisible:
-                continue
-
             i = 0
             for sumSpell in ePlayer.spells:
                 if sumSpell.isSummoner:
