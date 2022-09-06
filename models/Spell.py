@@ -18,7 +18,6 @@ class Spell:
 
         self.update()
 
-    @cache
     def update(self):
         spellSlots: int = self.pm.read_int(self.spellAddr + offsets.oSpellSlots)
         gameTime: float = self.pm.read_float(self.pm.base_address + offsets.oGameTime)

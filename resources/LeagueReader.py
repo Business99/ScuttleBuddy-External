@@ -25,7 +25,9 @@ class LeagueReader:
         i: int = 0
         while i < len(allChampAddrs):
             isVisible: bool = self.pm.read_bool(allChampAddrs[i] + offsets.oObjVisible)
-            if isVisible:
+            health: float = self.pm.read_float(allChampAddrs[i] + offsets.oObjHealth)
+
+            if isVisible or health <= 0:
                 player: PlayerEntity = PlayerEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix,
                                                     allChampAddrs[i])
                 if player.teamId == self.localPlayer.teamId:
