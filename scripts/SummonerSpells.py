@@ -19,15 +19,15 @@ class SummonerSpells:
 
     def enemy_summonor_spells(self):
         for ePlayer in self.lReader.enemyPlayers:
+            if ePlayer.health <= 0:
+                continue
+
             i = 0
             for sumSpell in ePlayer.spells:
                 if sumSpell.isSummoner:
 
                     texture = self.pymeow.load_texture(
                         f"{SUMMONER_SPELL_FP}{sumSpell.name}.png")
-
-                    if ePlayer.championName == 'Renekton':
-                        print(ePlayer.screenPos)
 
                     if i == 0:
                         self.pymeow.draw_texture(texture, ePlayer.screenPos['x'] - 60,
