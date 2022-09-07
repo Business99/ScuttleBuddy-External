@@ -22,6 +22,7 @@ oObjMana: int = 0x029C
 oObjMaxMana: int = 0x02AC
 oObjVisible: int = 0x0274
 
+
 # Player Stats
 statBase: int = 0x1270
 oObjStatAp: int = 0x1750
@@ -33,6 +34,8 @@ oObjMagicPenFlat: int = statBase + 0x0
 oObjArmorPen: int = statBase + 0x4
 oObjMagicPenPercent: int = statBase + 0x8
 oObjLethality: int = statBase + 0x1C
+statBase2: int = statBase + 0x124
+oObjStatAttackRange: int = statBase2 + 0x8
 
 # Spells
 oSpellBook: int = 0x2330

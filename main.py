@@ -31,10 +31,14 @@ if __name__ == '__main__':
             scripts.SummonerSpells(lReader, pymeow)
         if settings['VeigarScript']:
             scripts.Veigar(lReader, pymeow)
+        if settings['GarenScript']:
+            scripts.Garen(lReader, pymeow)
+
+        # scripts.Core(lReader, pymeow)
 
         et = time.time()
 
         execution_time = (et - st) * 1000
         ex_times.append(execution_time)
 
-        print(f"Average Execution time: {sum(ex_times) / len(ex_times)} ms")
+        # print(f"Average Execution time: {sum(ex_times) / len(ex_times)} ms")

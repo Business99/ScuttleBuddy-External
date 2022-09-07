@@ -6,7 +6,7 @@ scriptSettings: dict = {
 }
 
 
-class Veigar:
+class Garen:
     def __init__(self, lReader, pymeow):
         self.lReader = lReader
         self.pymeow = pymeow
@@ -14,27 +14,23 @@ class Veigar:
 
         # Run script functions based on script settings
         if scriptSettings['RExecuteESP']:
-            self.veigar_r_execute_esp()
+            self.garen_r_execute_esp()
 
-    def veigar_r_execute_esp(self):
+    def garen_r_execute_esp(self):
         # Check if the person is playing Veigar
-        if not self.lReader.localPlayer.championName == 'Veigar':
+        if not self.lReader.localPlayer.championName == 'Garen':
             return
 
         # Get Veigar's Ult
-        ult_spell = None
-        for spell in self.lReader.localPlayer.spells:
-            if spell.name == 'VeigarR':
-                ult_spell = spell
-                break
+        ult_spell = self.lReader.localPlayer.spells[3]
 
         # Make sure the person has unlocked their ult
         if ult_spell.level == 0:
             return
 
         # Calculate total R damage
-        baseDamage: int = [175, 250, 325][ult_spell.level - 1]
-        scalingDamage: float = 0.75 * self.lReader.localPlayer.ap
+        baseDamage: int = [150, 300, 450][ult_spell.level - 1]
+        missingHealthDamage: int = [.25, .35, .35][ult_spell.level - 1]
 
         # Loop through enemies and alert if one can be killed
         for enemy in self.lReader.enemyPlayers:
@@ -44,12 +40,8 @@ class Veigar:
             percentage_health: float = 100 / enemy.maxHealth * enemy.health
             percentMissingHp: float = 100 - percentage_health
 
-            bonusDamagePercent: float = max(percentMissingHp * 1.5, 100)
-
-            beforeResistDmg: float = (baseDamage + scalingDamage) + (
-                    (baseDamage + scalingDamage) / 100 * bonusDamagePercent)
-
-            totalDamage: float = calculate.calculate_magic_damage(self.lReader.localPlayer, enemy, beforeResistDmg)
+            missingHp: float = enemy.maxHealth - enemy.health
+            totalDamage: float = baseDamage + (missingHp * missingHealthDamage)
 
             if enemy.health <= totalDamage and ult_spell.readyIn == 0:
                 self.pymeow.circle(

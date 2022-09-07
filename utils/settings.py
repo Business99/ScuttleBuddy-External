@@ -1,4 +1,5 @@
 SETTINGS: dict = {
     'SummonerSpellScript': True,
-    'VeigarScript': True
+    'VeigarScript': True,
+    'GarenScript': True
 }

@@ -33,6 +33,7 @@ class PlayerEntity:
         self.magicPenPercent: float = 0
         self.armorPenPercent: float = 0
         self.lethality: float = 0
+        self.attackRange: float = 0
 
         self.gamePos = pymeow.vec3()
         self.screenPos = pymeow.vec2()
@@ -68,6 +69,7 @@ class PlayerEntity:
         self.magicPenPercent = (1 - self.pm.read_float(self.entityAddress + offsets.oObjMagicPenPercent)) * 100
         self.armorPenPercent = (1 - self.pm.read_float(self.entityAddress + offsets.oObjArmorPen)) * 100
         self.lethality = self.pm.read_float(self.entityAddress + offsets.oObjLethality)
+        self.attackRange = self.pm.read_float(self.entityAddress + offsets.oObjStatAttackRange)
 
         # Positions
         self.gamePos = pymeow.read_vec3(self.mem, self.entityAddress + offsets.oObjPosition)
