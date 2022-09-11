@@ -1,4 +1,4 @@
-# Scuttle Buddy
+# Scuttle Buddy (v12.17)
 ### External Scripting Platform for League of Legends
 #### Please note this project is still in the early stages. Anything and everything is subject to change.
 
