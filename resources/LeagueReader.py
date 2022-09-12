@@ -41,4 +41,5 @@ class LeagueReader:
     def get_players(self) -> list[PlayerEntity]:
         allChampAddrs: list[int] = StructureReader.read_v_table(self.pm, self.lStorage.heroManagerAddr)
         for champ in allChampAddrs:
-            yield PlayerEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix, champ)
+            yield PlayerEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix, champ)            
+            
