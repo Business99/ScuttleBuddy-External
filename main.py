@@ -41,4 +41,4 @@ if __name__ == '__main__':
         execution_time = (et - st) * 1000
         ex_times.append(execution_time)
 
-        # print(f"Average Execution time: {sum(ex_times) / len(ex_times)} ms")
+        print(f"Average Execution time: {sum(ex_times) / len(ex_times)} ms")

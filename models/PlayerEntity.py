@@ -6,85 +6,101 @@ from functools import cache
 
 
 class PlayerEntity:
-    def __init__(self, pm: Pymem, mem, overlay, viewProjMatrix, entityAddress: int):
+    def __init__(self, pm, mem, overlay, viewProjMatrix, entityAddress: int):
         self.pm = pm
         self.mem = mem
         self.overlay = overlay
         self.viewProjMatrix = viewProjMatrix
         self.entityAddress = entityAddress
 
-        self.championName: str = None
-        self.teamId: int = 0
-
-        self.health: float = 0
-        self.maxHealth: float = 0
-        self.mana: float = 0
-        self.maxMana: float = 0
-
-        # Resistances
-        self.magicResist: float = 0
-        self.armor: float = 0
-
-        self.ap: float = 0
-        self.ad: float = 0
-
-        # Penetrations
-        self.magicPenFlat: float = 0
-        self.magicPenPercent: float = 0
-        self.armorPenPercent: float = 0
-        self.lethality: float = 0
-        self.attackRange: float = 0
-
-        self.gamePos = pymeow.vec3()
-        self.screenPos = pymeow.vec2()
-
-        self.spells: list = []
-
-        self.isVisible = True
-        self.level = 0
-
-        self.update()
+    @property
+    def championName(self) -> str:
+        nameAddr: int = self.pm.read_int(self.entityAddress + offsets.oObjName)
+        return self.pm.read_string(nameAddr)
 
     @property
-    def on_screen(self):
-        return self.screenPos['x'] > 0 and self.screenPos['x'] < self.overlay['width'] and self.screenPos['y'] > 0 and self.screenPos['y'] < self.overlay['height']
-    
-    @cache
-    def update(self):
-        nameAddr: int = self.pm.read_int(self.entityAddress + offsets.oObjName)
+    def level(self) -> int:
+        return self.pm.read_int(self.entityAddress + offsets.oObjLevel)
 
-        self.championName = self.pm.read_string(nameAddr)
-        self.level = self.pm.read_int(self.entityAddress + offsets.oObjLevel)
-        self.teamId = self.pm.read_int(self.entityAddress + offsets.oObjTeamId)
-        self.health = self.pm.read_float(self.entityAddress + offsets.oObjHealth)
-        self.maxHealth = self.pm.read_float(self.entityAddress + offsets.oObjMaxHealth)
-        self.mana = self.pm.read_float(self.entityAddress + offsets.oObjMana)
-        self.maxMana = self.pm.read_float(self.entityAddress + offsets.oObjMaxMana)
+    @property
+    def teamId(self) -> int:
+        return self.pm.read_int(self.entityAddress + offsets.oObjTeamId)
 
-        self.ap = self.pm.read_float(self.entityAddress + offsets.oObjStatAp)
-        self.ad = self.pm.read_float(
-            self.entityAddress + offsets.oObjStatBaseAd
-        ) + self.pm.read_float(self.entityAddress + offsets.oObjStatBonusAd)
+    @property
+    def health(self) -> float:
+        return self.pm.read_float(self.entityAddress + offsets.oObjHealth)
 
-        self.magicResist = self.pm.read_float(self.entityAddress + offsets.oObjMagicRes)
-        self.armor = self.pm.read_float(self.entityAddress + offsets.oObjArmor)
+    @property
+    def maxHealth(self) -> float:
+        return self.pm.read_float(self.entityAddress + offsets.oObjMaxHealth)
 
-        self.magicPenFlat = self.pm.read_float(self.entityAddress + offsets.oObjMagicPenFlat)
-        self.magicPenPercent = (1 - self.pm.read_float(self.entityAddress + offsets.oObjMagicPenPercent)) * 100
-        self.armorPenPercent = (1 - self.pm.read_float(self.entityAddress + offsets.oObjArmorPen)) * 100
-        self.lethality = self.pm.read_float(self.entityAddress + offsets.oObjLethality)
-        self.attackRange = self.pm.read_float(self.entityAddress + offsets.oObjStatAttackRange)
+    @property
+    def mana(self) -> float:
+        return self.pm.read_float(self.entityAddress + offsets.oObjMana)
 
-        # Positions
-        self.gamePos = pymeow.read_vec3(self.mem, self.entityAddress + offsets.oObjPosition)
+    @property
+    def maxMana(self) -> float:
+        return self.pm.read_float(self.entityAddress + offsets.oObjMaxMana)
 
-        # WTS
+    @property
+    def ap(self) -> float:
+        return self.pm.read_float(self.entityAddress + offsets.oObjStatAp)
+
+    @property
+    def ad(self) -> float:
+        return self.pm.read_float(self.entityAddress + offsets.oObjStatBaseAd) + self.pm.read_float(self.entityAddress + offsets.oObjStatBonusAd)
+
+    @property
+    def magicResist(self) -> float:
+        return self.pm.read_float(self.entityAddress + offsets.oObjMagicRes)
+
+    @property
+    def armor(self) -> float:
+        return self.pm.read_float(self.entityAddress + offsets.oObjArmor)
+
+    @property
+    def magicPenFlat(self) -> float:
+        return self.pm.read_float(self.entityAddress + offsets.oObjMagicPenFlat)
+
+    @property
+    def magicPenPercent(self) -> float:
+        return (1 - self.pm.read_float(self.entityAddress + offsets.oObjMagicPenPercent)) * 100
+
+    @property
+    def armorPenPercent(self) -> float:
+        return (1 - self.pm.read_float(self.entityAddress + offsets.oObjArmorPen)) * 100
+
+    @property
+    def lethality(self) -> float:
+        return self.pm.read_float(self.entityAddress + offsets.oObjLethality)
+
+    @property
+    def attackRange(self) -> float:
+        return self.pm.read_float(self.entityAddress + offsets.oObjStatAttackRange)
+
+    @property
+    def gamePos(self) -> dict:
+        return pymeow.read_vec3(self.mem, self.entityAddress + offsets.oObjPosition)
+
+    @property
+    def screenPos(self) -> dict:
         try:
-            self.screenPos = pymeow.wts_ogl(self.overlay, self.viewProjMatrix.tolist(), self.gamePos)
+            wts = pymeow.wts_ogl(self.overlay, self.viewProjMatrix.tolist(), self.gamePos)
         except:
-            pass
+            wts = pymeow.vec2()
+        return wts
 
-        self.isVisible = self.pm.read_bool(self.entityAddress + offsets.oObjVisible)
+    @property
+    def isVisible(self) -> bool:
+        return self.pm.read_bool(self.entityAddress + offsets.oObjVisible)
+
+    @property
+    def onScreen(self):
+        return self.screenPos['x'] > 0 and self.screenPos['x'] < self.overlay['width'] and self.screenPos['y'] > 0 and self.screenPos['y'] < self.overlay['height']
+
+    @property
+    def spells(self) -> list[Spell]:
+        spells: list = []
 
         # Handle spells
         spellAddresses: list[int] = []
@@ -95,5 +111,6 @@ class PlayerEntity:
 
         i: int = 0
         while i < len(spellAddresses):
-            self.spells.append(Spell(self.pm, spellAddresses[i]))
+            spells.append(Spell(self.pm, spellAddresses[i]))
             i += 1
+        return spells
