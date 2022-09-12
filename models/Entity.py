@@ -14,7 +14,6 @@ class Entity:
         self.viewProjMatrix = viewProjMatrix
         self.entityAddress = entityAddress
 
-    @cached_property
     def nameAddr(self) -> int:
         return self.pm.read_int(self.entityAddress + offsets.oObjName)
 

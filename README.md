@@ -36,14 +36,15 @@
 * *enemyPlayers* `list[PlayerEntity]`
   * A list of **PlayerEntity** objects that are on the enemy team.
 
-# PlayerEntity
-### `./models/PlayerEntity.py`
-### This is the entity object for storing a single player's data.
+# Entity
+### `./models/Entity.py`
+### This is the entity object for storing an Entity's data.
 
-* *championName* `str`
+* *name* `str`
 * *teamId* `int`
 * *level* `int`
 * *isVisible* `bool`
+* *onScreen* `bool`
 * *health* `float`
 * *maxHealth* `float`
 * *mana* `float`
@@ -58,6 +59,7 @@
 * *gamePos* `dict`
 * *screenPos* `dict`
 * *spells* `list[Spell]`
+* *AiManager* `AiManger`
 
 # Spell
 ### `./models/Spell.py`
@@ -69,3 +71,16 @@
 * *isReady* `bool` **Not Implemented
 * *readyIn* `float`
 * *isSummoner* `bool`
+  * Marks if the spell is a Summoner Spell or not
+
+# AiManager
+### `./models/AiManager.py`
+### This is the object for an Entity's Ai
+
+* *startPath* `dict`
+* *startPathScreen* `dict`
+* *endPath* `dict`
+* *endPathScreen* `dict`
+* *isDashing* `bool`
+* *isMoving* `bool`
+* *dashSpeed* `int`
