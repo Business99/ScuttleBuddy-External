@@ -1,5 +1,5 @@
 from resources import offsets
-from models import PlayerEntity
+from models import Entity
 import numpy as np
 import struct
 
@@ -42,7 +42,7 @@ def world_to_screen(view_proj_matrix, width, height, x, y, z):
     return None, None, out_x, out_y
 
 
-def convert_player_to_json(player: PlayerEntity):
+def convert_player_to_json(player: Entity):
     local: dict = {
         'championName': player.championName,
         'teamId': player.teamId,

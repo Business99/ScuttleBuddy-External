@@ -1,7 +1,7 @@
-from models import PlayerEntity
+from models import Entity
 
 
-def calculate_magic_damage(source: PlayerEntity, target: PlayerEntity, damage: float) -> float:
+def calculate_magic_damage(source: Entity, target: Entity, damage: float) -> float:
     targetMagicResist: float = target.magicResist
     sourceMagicPenFlat: float = source.magicPenFlat
     sourceMagicPenPerc: float = source.magicPenPercent
@@ -16,7 +16,7 @@ def calculate_magic_damage(source: PlayerEntity, target: PlayerEntity, damage: f
     return damage * (100 / (100 + unknown))
 
 
-def calculate_physical_damage(source: PlayerEntity, target: PlayerEntity, damage: float) -> float:
+def calculate_physical_damage(source: Entity, target: Entity, damage: float) -> float:
     targetArmor: float = target.armor
     sourceLethality: float = source.lethality
     sourceArmorPenPerc: float = source.armorPenPercent
