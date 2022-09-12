@@ -8,6 +8,11 @@ oGameWindowHeight: int = 0xc
 # Entities / Managers
 oLocalPlayer: int = 0x3141554 #0x3118DDC
 oHeroManager: int = 0x18A50D0 #0x187BF54
+oMinionList: int = 0x24F2850
+oTurretList: int = 0x3139D5C
+oMissileList: int = 0x3142288
+
+oVisibility: int =  0x274
 
 # Player Entity
 oObjTeamId: int = 0x0034 #0x0034
@@ -20,8 +25,6 @@ oObjHealth: int = 0x0E74 #0x0E74
 oObjMaxHealth: int = 0x0E84 #0x0E84
 oObjMana: int = 0x029C #0x029C
 oObjMaxMana: int = 0x02AC #0x02AC
-
-
 # Player Stats
 statBase: int = 0x1270
 oObjStatAp: int = 0x1750
