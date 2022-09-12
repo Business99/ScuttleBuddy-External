@@ -45,6 +45,10 @@ class PlayerEntity:
 
         self.update()
 
+    @property
+    def on_screen(self):
+        return self.screenPos['x'] > 0 and self.screenPos['x'] < self.overlay['width'] and self.screenPos['y'] > 0 and self.screenPos['y'] < self.overlay['height']
+    
     @cache
     def update(self):
         nameAddr: int = self.pm.read_int(self.entityAddress + offsets.oObjName)
