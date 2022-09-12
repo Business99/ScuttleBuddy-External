@@ -13,10 +13,10 @@ class Core:
             self.attack_range()
 
     def attack_range(self):
-
-        self.pymeow.ellipse_v(
-            self.lReader.localPlayer.screenPos,
-            self.lReader.localPlayer.attackRange,
-            self.lReader.localPlayer.attackRange,
-            self.pymeow.rgb("red")
-        )
+        if self.lReader.localPlayer.on_screen:
+            self.pymeow.ellipse_v(
+                self.lReader.localPlayer.screenPos,
+                self.lReader.localPlayer.attackRange,
+                self.lReader.localPlayer.attackRange,
+                self.pymeow.rgb("red")
+            )
