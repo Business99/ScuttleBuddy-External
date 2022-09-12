@@ -1,5 +1,6 @@
 from pymem import Pymem
-from models import PlayerEntity, MinionEntity
+from models import PlayerEntity
+from models.Minion import MinionEntity
 from resources import offsets, LeagueStorage
 from resources.StructureReader import StructureReader
 
