@@ -1,5 +1,6 @@
 from pymem import Pymem
 from models import Entity
+from models.Minion import MinionEntity
 from resources import offsets, LeagueStorage
 from resources.StructureReader import StructureReader
 
@@ -14,6 +15,14 @@ class LeagueReader:
 
         self.localPlayer: Entity = self.get_local_player()
         self.teamPlayers, self.enemyPlayers = self.get_players()
+        self.minions = self.get_minions()               
+
+    def get_minions(self) -> list:   
+        all_minions_addr: list[int] = StructureReader.read_v_table(self.pm, self.lStorage.minion_manager_addr)        
+        for minion_addr in all_minions_addr:            
+            m = MinionEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix, minion_addr)
+            if m.health > 0:
+                yield m               
 
     def get_local_player(self) -> Entity:
         return Entity(self.pm, self.mem, self.overlay, self.viewProjMatrix, self.lStorage.localPlayerAddr)
