@@ -29,6 +29,8 @@
   * The overlay window object that displays on top of the League Client.
 * *viewProjMatrix* `list`
   * The calculations necessary to convert a 3D game space into a 2D plane.
+* *minions* `MinionEntity`
+  * Contains all minions (jungle camps, turrets, etc) in game
 * *localPlayer* `PlayerEntity`
   * A fully populated **PlayerEntity** object in reference to the local player running the platform.
 * *teamPlayers* `list[PlayerEntity]`
@@ -36,14 +38,15 @@
 * *enemyPlayers* `list[PlayerEntity]`
   * A list of **PlayerEntity** objects that are on the enemy team.
 
-# PlayerEntity
-### `./models/PlayerEntity.py`
-### This is the entity object for storing a single player's data.
+# Entity
+### `./models/Entity.py`
+### This is the entity object for storing an Entity's data.
 
-* *championName* `str`
+* *name* `str`
 * *teamId* `int`
 * *level* `int`
 * *isVisible* `bool`
+* *onScreen* `bool`
 * *health* `float`
 * *maxHealth* `float`
 * *mana* `float`
@@ -58,6 +61,7 @@
 * *gamePos* `dict`
 * *screenPos* `dict`
 * *spells* `list[Spell]`
+* *AiManager* `AiManger`
 
 # Spell
 ### `./models/Spell.py`
@@ -69,3 +73,16 @@
 * *isReady* `bool` **Not Implemented
 * *readyIn* `float`
 * *isSummoner* `bool`
+  * Marks if the spell is a Summoner Spell or not
+
+# AiManager
+### `./models/AiManager.py`
+### This is the object for an Entity's Ai
+
+* *startPath* `dict`
+* *startPathScreen* `dict`
+* *endPath* `dict`
+* *endPathScreen* `dict`
+* *isDashing* `bool`
+* *isMoving* `bool`
+* *dashSpeed* `int`

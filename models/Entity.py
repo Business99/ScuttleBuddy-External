@@ -1,24 +1,25 @@
 import pymeow
+from pymem import Pymem
 from models.Spell import Spell
+from models.AiManager import AiManager
 from resources import offsets
 from functools import cached_property
 
 
 class Entity:
-    def __init__(self, pm, mem, overlay, viewProjMatrix, entityAddress: int) -> None:
+    def __init__(self, pm: Pymem, mem, overlay, viewProjMatrix, entityAddress: int) -> None:
         self.pm = pm
         self.mem = mem
         self.overlay = overlay
         self.viewProjMatrix = viewProjMatrix
         self.entityAddress = entityAddress
 
-    @cached_property
-    def champNameAddr(self) -> int:
+    def nameAddr(self) -> int:
         return self.pm.read_int(self.entityAddress + offsets.oObjName)
 
     @cached_property
     def name(self) -> str:
-        return self.pm.read_string(self.champNameAddr)
+        return self.pm.read_string(self.nameAddr)
 
     @cached_property
     def level(self) -> int:
@@ -50,7 +51,8 @@ class Entity:
 
     @cached_property
     def ad(self) -> float:
-        return self.pm.read_float(self.entityAddress + offsets.oObjStatBaseAd) + self.pm.read_float(self.entityAddress + offsets.oObjStatBonusAd)
+        return self.pm.read_float(self.entityAddress + offsets.oObjStatBaseAd) + self.pm.read_float(
+            self.entityAddress + offsets.oObjStatBonusAd)
 
     @cached_property
     def magicResist(self) -> float:
@@ -116,3 +118,13 @@ class Entity:
             spells.append(Spell(self.pm, spellAddresses[i]))
             i += 1
         return spells
+
+    @property
+    def AiManager(self) -> AiManager:
+        v1 = pymeow.read_byte(self.mem, self.entityAddress + offsets.oObjAiManager)
+        v2 = self.entityAddress + offsets.oObjAiManager - 8
+        v3 = self.pm.read_int(v2 + 4)
+        v4 = self.pm.read_int(v2 + (4 * v1 + 12))
+        v4 = v4 ^ ~v3
+        addr = self.pm.read_int(v4 + 0x8)
+        return AiManager(self.pm, self.mem, self.viewProjMatrix, self.overlay, addr)
