@@ -3,7 +3,7 @@
 #### Please note this project is still in the early stages. Anything and everything is subject to change.
 
 # Discord
-### [Join](https://discord.gg/P9VTvGCWBD)
+### [Join Here](https://discord.gg/P9VTvGCWBD)
 
 # Installation Instructions
 
