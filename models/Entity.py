@@ -17,7 +17,7 @@ class Entity:
         return self.pm.read_int(self.entityAddress + offsets.oObjName)
 
     @cached_property
-    def championName(self) -> str:
+    def name(self) -> str:
         return self.pm.read_string(self.champNameAddr)
 
     @cached_property
