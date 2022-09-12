@@ -25,7 +25,7 @@ class Manager:
     def all(self):
         return (obj for obj in self._store[self._client_name])
 
-    def filter(self, *args, **kwargs):
+    def filter(self, a_lambda):
         if a_lambda.__code__.co_name != "<lambda>":
             raise ValueError("a lambda required")
 
