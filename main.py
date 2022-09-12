@@ -27,8 +27,8 @@ if __name__ == '__main__':
         lReader: LeagueReader = LeagueReader(pm, mem, overlay, view_proj_matrix, lStorage)
 
         # Based on global script settings, load the scripts
-        # if settings['SummonerSpellScript']:
-        #     scripts.SummonerSpells(lReader, pymeow)
+        if settings['SummonerSpellScript']:
+            scripts.SummonerSpells(lReader, pymeow)
         # if settings['VeigarScript']:
         #     scripts.Veigar(lReader, pymeow)
         # if settings['GarenScript']:
@@ -36,9 +36,9 @@ if __name__ == '__main__':
 
         # scripts.Core(lReader, pymeow)
 
-        # et = time.time()
+        et = time.time()
 
-        # execution_time = (et - st) * 1000
-        # ex_times.append(execution_time)
+        execution_time = (et - st) * 1000
+        ex_times.append(execution_time)
 
-        # print(f"Average Execution time: {execution_time} ms")
+        print(f"Average Execution time: {execution_time} ms")

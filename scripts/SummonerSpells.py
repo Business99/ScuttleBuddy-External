@@ -19,7 +19,7 @@ class SummonerSpells:
 
     def enemy_summonor_spells(self):
         for ePlayer in self.lReader.enemyPlayers:
-            if ePlayer.health <= 0:
+            if ePlayer.health <= 0 or not ePlayer.onScreen:
                 continue
 
             i = 0

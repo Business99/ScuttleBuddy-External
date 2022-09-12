@@ -23,25 +23,22 @@ class LeagueReader:
                 yield m
 
     @cached_property
-    def get_local_player(self) -> PlayerEntity:
+    def localPlayer(self) -> PlayerEntity:
         return PlayerEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix, self.lStorage.localPlayerAddr)
 
     @cached_property
-    def team_players(self) -> list[PlayerEntity]:
+    def teamPlayers(self) -> list[PlayerEntity]:
         for p in self.get_players():
             if p.teamId == self.localPlayer.teamId:
                 yield p
 
     @cached_property
-    def enemies_players(self) -> list[PlayerEntity]:
+    def enemyPlayers(self) -> list[PlayerEntity]:
         for p in self.get_players():
             if p.teamId != self.localPlayer.teamId:
                 yield p
 
-    @cached_property
-    def get_players(self) -> tuple[list[PlayerEntity], list[PlayerEntity]]:
-
+    def get_players(self) -> list[PlayerEntity]:
         allChampAddrs: list[int] = StructureReader.read_v_table(self.pm, self.lStorage.heroManagerAddr)
-
         for champ in allChampAddrs:
-            yield champ
+            yield PlayerEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix, champ)
