@@ -15,7 +15,7 @@ class Core:
     def attack_range(self):
 
         self.pymeow.ellipse_v(
-            self.lReader.localPlayer.gamePos,
+            self.lReader.localPlayer.screenPos,
             self.lReader.localPlayer.attackRange,
             self.lReader.localPlayer.attackRange,
             self.pymeow.rgb("red")
