@@ -29,6 +29,8 @@
   * The overlay window object that displays on top of the League Client.
 * *viewProjMatrix* `list`
   * The calculations necessary to convert a 3D game space into a 2D plane.
+* *minions* `MinionEntity`
+  * Contains all minions (jungle camps, turrets, etc) in game
 * *localPlayer* `PlayerEntity`
   * A fully populated **PlayerEntity** object in reference to the local player running the platform.
 * *teamPlayers* `list[PlayerEntity]`
