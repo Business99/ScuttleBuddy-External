@@ -1,6 +1,5 @@
 from pymem import Pymem
-from models import Entity
-from models.Minion import MinionEntity
+from models import PlayerEntity, MinionEntity
 from resources import offsets, LeagueStorage
 from resources.StructureReader import StructureReader
 
@@ -13,7 +12,7 @@ class LeagueReader:
         self.viewProjMatrix = viewProjMatrix
         self.lStorage: LeagueStorage = lStorage
 
-        self.localPlayer: Entity = self.get_local_player()
+        self.localPlayer: PlayerEntity = self.get_local_player()
         self.teamPlayers, self.enemyPlayers = self.get_players()
         self.minions = self.get_minions()               
 
@@ -24,10 +23,10 @@ class LeagueReader:
             if m.health > 0:
                 yield m               
 
-    def get_local_player(self) -> Entity:
-        return Entity(self.pm, self.mem, self.overlay, self.viewProjMatrix, self.lStorage.localPlayerAddr)
+    def get_local_player(self) -> PlayerEntity:
+        return PlayerEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix, self.lStorage.localPlayerAddr)
 
-    def get_players(self) -> tuple[list[Entity], list[Entity]]:
+    def get_players(self) -> tuple[list[PlayerEntity], list[PlayerEntity]]:
         allChampAddrs: list[int] = StructureReader.read_v_table(self.pm, self.lStorage.heroManagerAddr)
 
         teamPlayers, enemyPlayers = [], []
@@ -37,7 +36,7 @@ class LeagueReader:
             health: float = self.pm.read_float(allChampAddrs[i] + offsets.oObjHealth)
 
             if isVisible or health <= 0:
-                player: Entity = Entity(self.pm, self.mem, self.overlay, self.viewProjMatrix,
+                player: PlayerEntity = PlayerEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix,
                                                     allChampAddrs[i])
                 if player.teamId == self.localPlayer.teamId:
                     teamPlayers.append(player)

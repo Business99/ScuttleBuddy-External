@@ -1,6 +1,6 @@
 from pymem import Pymem
 from resources import offsets
-from functools import cache
+from functools import cache, cached_property
 
 
 class Spell:
@@ -8,42 +8,55 @@ class Spell:
         self.pm = pm
         self.spellAddr: int = spellAddr
 
-        self.name: str = None
-        self.infoName: str = None
-        self.readyAt: float = 0
-        self.level: int = 0
-        self.isReady: bool = False
-        self.readyIn: float = 0
-        self.isSummoner: bool = False
+    @cached_property
+    def spellSlots(self) -> int:
+        return self.pm.read_int(self.spellAddr + offsets.oSpellSlots)
 
-        self.update()
+    @cached_property
+    def info(self) -> int:
+        return self.pm.read_int(self.spellSlots + offsets.oSpellInfo)
 
-    @cache
-    def update(self):
-        spellSlots: int = self.pm.read_int(self.spellAddr + offsets.oSpellSlots)
-        gameTime: float = self.pm.read_float(self.pm.base_address + offsets.oGameTime)
+    @cached_property
+    def data(self) -> int:
+        return self.pm.read_int(self.info + offsets.oSpellInfoData)
 
-        self.readyAt = self.pm.read_float(spellSlots + offsets.oSpellReadyAt)
+    # TODO: Implement this in an outside object such as GameState.py
+    @cached_property
+    def gameTime(self) -> float:
+        return self.pm.read_float(self.pm.base_address + offsets.oGameTime)
 
-        if (self.readyAt - gameTime) > 0:
-            self.readyIn = self.readyAt - gameTime
+    @cached_property
+    def readyAt(self) -> float:
+        return self.pm.read_float(self.spellSlots + offsets.oSpellReadyAt)
+
+    @cached_property
+    def readyIn(self) -> float:
+        if (self.readyAt - self.gameTime) > 0:
+            return self.readyAt - self.gameTime
         else:
-            self.readyIn = 0
+            return 0
 
-        info: int = self.pm.read_int(spellSlots + offsets.oSpellInfo)
-        data: int = self.pm.read_int(info + offsets.oSpellInfoData)
+    @cached_property
+    def level(self) -> int:
+        return self.pm.read_int(self.spellSlots + offsets.oSpellLevel)
 
-        nameAddr: int = self.pm.read_int(data + offsets.oSpellInfoDataName)
-        self.name = self.pm.read_string(nameAddr)
+    @cached_property
+    def nameAddr(self) -> int:
+        return self.pm.read_int(self.data + offsets.oSpellInfoDataName)
 
-        if 'Flash' in self.name:
-            self.name = 'SummonerFlash'
-        elif 'Teleport' in self.name:
-            self.name = 'SummonerTeleport'
-        elif 'Smite' in self.name:
-            self.name = 'SummonerSmite'
+    # TODO: Implement Smite variations, hex flash, and upgraded teleport (Band-aid fix implemented here already)
+    @cached_property
+    def name(self) -> str:
+        result = self.pm.read_string(self.nameAddr)
+        if 'Flash' in result:
+            return 'SummonerFlash'
+        elif 'Teleport' in result:
+            return 'SummonerTeleport'
+        elif 'Smite' in result:
+            return 'SummonerSmite'
 
-        self.level = self.pm.read_int(spellSlots + offsets.oSpellLevel)
+        return result
 
-        if 'Summoner' in self.name:
-            self.isSummoner = True
+    @cached_property
+    def isSummoner(self) -> bool:
+        return 'Summoner' in self.name
