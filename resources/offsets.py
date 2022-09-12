@@ -12,7 +12,7 @@ oMinionList: int = 0x24F2850
 oTurretList: int = 0x3139D5C
 oMissileList: int = 0x3142288
 
-oVisibility: int =  0x274
+oVisibility: int = 0x274
 
 # Player Entity
 oObjTeamId: int = 0x0034 #0x0034
@@ -25,6 +25,7 @@ oObjHealth: int = 0x0E74 #0x0E74
 oObjMaxHealth: int = 0x0E84 #0x0E84
 oObjMana: int = 0x029C #0x029C
 oObjMaxMana: int = 0x02AC #0x02AC
+
 # Player Stats
 statBase: int = 0x1270
 oObjStatAp: int = 0x1750
@@ -54,3 +55,13 @@ oSpellInfoName: int = 0x104
 
 oSpellInfoData: int = 0x40
 oSpellInfoDataName: int = 0x6C
+
+# Ai Manager
+oObjAiManager: int = 0x2E14
+oAiManagerTargetPos: int = 0x10
+oAiManagerStartPath: int = 0x1CC
+oAiManagerEndPath: int = 0x1D8
+oAiManagerIsMoving: int = 0x1C0
+oAiManagerIsDashing: int = 0x214
+oAiManagerCurrentSegment: int = 0x1C4
+oAiManagerDashSpeed: int = 0x1F8
