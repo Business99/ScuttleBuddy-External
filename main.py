@@ -13,7 +13,7 @@ loaded_scripts: list = []
 
 
 def load_user_scripts() -> None:
-    with open("settings.json", "r") as f:
+    with open(os.path.abspath("settings.json"), "r") as f:
         data = json.load(f)
 
     data["scripts"] = {}
@@ -29,13 +29,14 @@ def load_user_scripts() -> None:
         moduleSettings: dict = module.setup()
         data['scripts'][filename] = moduleSettings
 
-    with open("settings.json", "w") as j:
+    with open(os.path.abspath("settings.json"), "w") as j:
         json.dump(data, j, indent=4)
 
 
 if __name__ == '__main__':
     # t2 = threading.Thread(target=SettingsWindow.tkinter_window)
     # t2.start()
+    print()
     load_user_scripts()
     pm: Pymem = Pymem('League of Legends.exe')
     mem = pymeow.process_by_name("League of Legends.exe")
@@ -53,7 +54,7 @@ if __name__ == '__main__':
         view_proj_matrix = utils.find_view_proj_matrix(pm)
         lReader: LeagueReader = LeagueReader(pm, mem, overlay, view_proj_matrix, lStorage)
 
-        with open("settings.json", "r") as f:
+        with open(os.path.abspath("settings.json"), "r") as f:
             settings = json.load(f)
 
         for user_script in loaded_scripts:
@@ -64,4 +65,4 @@ if __name__ == '__main__':
 
         execution_time = (et - st) * 1000
 
-        print(f"Average Execution time: {execution_time} ms")
+        # print(f"Average Execution time: {execution_time} ms")
