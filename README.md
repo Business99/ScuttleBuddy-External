@@ -2,7 +2,7 @@
 ### External Scripting Platform for League of Legends
 #### Please note this project is still in the early stages. Anything and everything is subject to change.
 
-# Discord
+# Discord + Documentation
 ### [Join Here](https://discord.gg/P9VTvGCWBD)
 
 # Installation Instructions
@@ -16,73 +16,3 @@
 
 ### Precompiled:
 1. *In Progress...*
-
-# LeagueReader
-### `./resources/LeagueReader.py`
-### This reader class is the root of all game data, and is refreshed every tick.
-
-* *pm* `Pymem`
-  * Pymem Object used for accessing memory.
-* *mem* `PyMeow`
-  * Pymeow Object used for accessing memory and drawing on screen.
-* *overlay* `dict`
-  * The overlay window object that displays on top of the League Client.
-* *viewProjMatrix* `list`
-  * The calculations necessary to convert a 3D game space into a 2D plane.
-* *minions* `MinionEntity`
-  * Contains all minions (jungle camps, turrets, etc) in game
-* *localPlayer* `PlayerEntity`
-  * A fully populated **PlayerEntity** object in reference to the local player running the platform.
-* *teamPlayers* `list[PlayerEntity]`
-  * A list of **PlayerEntity** objects that are on the localPlayer's team.
-* *enemyPlayers* `list[PlayerEntity]`
-  * A list of **PlayerEntity** objects that are on the enemy team.
-
-# Entity
-### `./models/Entity.py`
-### This is the entity object for storing an Entity's data.
-
-* *name* `str`
-* *teamId* `int`
-* *level* `int`
-* *isVisible* `bool`
-* *onScreen* `bool`
-* *health* `float`
-* *maxHealth* `float`
-* *mana* `float`
-* *maxMana* `float`
-* *magicResist* `float`
-* *armor* `float`
-* *ap* `float`
-* *ad* `float`
-* *magicPenFlat* `float`
-* *magicPenPercent* `float`
-* *armorPenPercent* `float`
-* *gamePos* `dict`
-* *screenPos* `dict`
-* *spells* `list[Spell]`
-* *AiManager* `AiManger`
-
-# Spell
-### `./models/Spell.py`
-### This is the object for each spell a champion can cast.
-
-* *name* `str`
-* *readyAt* `float`
-* *level* `int`
-* *isReady* `bool` **Not Implemented
-* *readyIn* `float`
-* *isSummoner* `bool`
-  * Marks if the spell is a Summoner Spell or not
-
-# AiManager
-### `./models/AiManager.py`
-### This is the object for an Entity's Ai
-
-* *startPath* `dict`
-* *startPathScreen* `dict`
-* *endPath* `dict`
-* *endPathScreen* `dict`
-* *isDashing* `bool`
-* *isMoving* `bool`
-* *dashSpeed* `int`
