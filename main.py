@@ -6,7 +6,7 @@ import time
 import importlib
 import os
 import json
-import tkinter as tk
+from ui import SettingsWindow
 import threading
 
 loaded_scripts: list = []
@@ -33,28 +33,8 @@ def load_user_scripts() -> None:
         json.dump(data, j, indent=4)
 
 
-def tkinter_window():
-    window = tk.Tk()
-    window.geometry('300x200')
-    window.title('ScuttleBuddy')
-    test_icon = tk.PhotoImage(file='./datadragon/summonerSpells/SummonerSmite.png')
-    testButton = tk.Button(
-        window,
-        image=test_icon,
-        text='Test',
-        compound=tk.LEFT,
-        command=lambda: window.quit()
-    )
-    testButton.pack(
-        ipadx=5,
-        ipady=5,
-        expand=True
-    )
-    window.mainloop()
-
-
 if __name__ == '__main__':
-    # t2 = threading.Thread(target=tkinter_window)
+    # t2 = threading.Thread(target=SettingsWindow.tkinter_window)
     # t2.start()
     load_user_scripts()
     pm: Pymem = Pymem('League of Legends.exe')
