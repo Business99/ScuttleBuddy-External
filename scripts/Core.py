@@ -1,14 +1,12 @@
+import math
+
 # Define script specific settings
 scriptSettings: dict = {
     'AttackRangeESP': True,
     'TestAiManager': True
 }
 
-import os
-import keyboard
-import mouse
-import time
-import math
+
 class Core:
     def __init__(self, lReader, pymeow):
         self.lReader = lReader
@@ -18,7 +16,6 @@ class Core:
             self.attack_range()
         if scriptSettings['TestAiManager']:
             self.test_ai_manager()
-        self.orbwalk()
 
     def attack_range(self):       
         if self.lReader.localPlayer.onScreen:

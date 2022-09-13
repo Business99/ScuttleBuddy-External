@@ -18,7 +18,6 @@ if __name__ == '__main__':
 
     # pymeow.set_foreground("League of Legends (TM) Client")
 
-    ex_times: list = []
     while pymeow.overlay_loop(overlay):
         settings: dict = SETTINGS
 
@@ -39,6 +38,5 @@ if __name__ == '__main__':
         et = time.time()
 
         execution_time = (et - st) * 1000
-        ex_times.append(execution_time)
 
         # print(f"Average Execution time: {execution_time} ms")
