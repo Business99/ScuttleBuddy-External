@@ -45,11 +45,3 @@ def attack_range(lReader: LeagueReader, pymeow):
                 pymeow.rgb("red")
             )
             i += 1
-
-        # pymeow.ellipse_v(
-        #     pos,
-        #     self.lReader.localPlayer.attackRange - ((43 * self.lReader.localPlayer.attackRange) / 100.0),#170 * 0.5,
-        #     self.lReader.localPlayer.attackRange - ((55 * self.lReader.localPlayer.attackRange) / 100.0),
-        #     #self.lReader.localPlayer,#150 * 0.3,
-        #     self.pymeow.rgb("red")
-        # )
