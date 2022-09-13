@@ -6,24 +6,25 @@ from resources import offsets
 from functools import cached_property
 from .EntityManager import Model
 
+
 class Entity(Model):
-    
+
     def __add__(self, other):
         return self.entityAddress + other
-    
+
     def __radd__(self, other):
         if other == 0:
-            return self.entityAddress                        
+            return self.entityAddress
         else:
-            return self.__add__(other)        
-       
+            return self.__add__(other)
+
     def __init__(self, pm: Pymem, mem, overlay, viewProjMatrix, entityAddress: int) -> None:
         self.pm = pm
         self.mem = mem
         self.overlay = overlay
         self.viewProjMatrix = viewProjMatrix
         self.entityAddress = entityAddress
-    
+        
     @cached_property
     def nameAddr(self) -> int:
         return self.pm.read_int(self.entityAddress + offsets.oObjName)
@@ -111,7 +112,8 @@ class Entity(Model):
 
     @cached_property
     def onScreen(self):
-        return self.screenPos['x'] > 0 and self.screenPos['x'] < self.overlay['width'] and self.screenPos['y'] > 0 and self.screenPos['y'] < self.overlay['height']
+        return self.screenPos['x'] > 0 and self.screenPos['x'] < self.overlay['width'] and self.screenPos['y'] > 0 and \
+               self.screenPos['y'] < self.overlay['height']
 
     @cached_property
     def spells(self) -> list[Spell]:
