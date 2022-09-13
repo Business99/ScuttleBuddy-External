@@ -9,7 +9,6 @@ import json
 import tkinter as tk
 import threading
 
-
 loaded_scripts: list = []
 
 
@@ -33,6 +32,7 @@ def load_user_scripts() -> None:
     with open("settings.json", "w") as j:
         json.dump(data, j, indent=4)
 
+
 def tkinter_window():
     window = tk.Tk()
     window.geometry('300x200')
@@ -52,9 +52,10 @@ def tkinter_window():
     )
     window.mainloop()
 
+
 if __name__ == '__main__':
-    t2 = threading.Thread(target=tkinter_window)
-    t2.start()
+    # t2 = threading.Thread(target=tkinter_window)
+    # t2.start()
     load_user_scripts()
     pm: Pymem = Pymem('League of Legends.exe')
     mem = pymeow.process_by_name("League of Legends.exe")
