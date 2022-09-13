@@ -12,11 +12,11 @@ loaded_scripts: list = []
 
 
 def load_user_scripts() -> None:
-    for filename in os.listdir('scripts'):
+    for filename in os.listdir('scripts/enabled'):
         if filename == '__pycache__':
             continue
 
-        module = importlib.import_module(f'scripts.{filename[:-3]}')
+        module = importlib.import_module(f'scripts.enabled.{filename[:-3]}')
         loaded_scripts.append(module)
         print(f"Loaded: {filename}")
 
@@ -34,9 +34,8 @@ if __name__ == '__main__':
     # pymeow.set_foreground("League of Legends (TM) Client")
 
     while pymeow.overlay_loop(overlay):
-        settings: dict = SETTINGS
-
         st = time.time()
+
         view_proj_matrix = utils.find_view_proj_matrix(pm)
         lReader: LeagueReader = LeagueReader(pm, mem, overlay, view_proj_matrix, lStorage)
 
@@ -47,4 +46,4 @@ if __name__ == '__main__':
 
         execution_time = (et - st) * 1000
 
-        # print(f"Average Execution time: {execution_time} ms")
+        print(f"Average Execution time: {execution_time} ms")
