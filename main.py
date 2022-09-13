@@ -13,7 +13,7 @@ loaded_scripts: list = []
 
 def load_user_scripts() -> None:
     for filename in os.listdir('scripts'):
-        if filename == '__pycache__' or filename == '__init__.py':
+        if filename == '__pycache__':
             continue
 
         module = importlib.import_module(f'scripts.{filename[:-3]}')
@@ -42,8 +42,6 @@ if __name__ == '__main__':
 
         for user_script in loaded_scripts:
             user_script.on_tick(lReader, pymeow)
-
-        scripts.Core(lReader, pymeow)
 
         et = time.time()
 
