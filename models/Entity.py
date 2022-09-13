@@ -115,23 +115,6 @@ class Entity(Model):
         return self.screenPos['x'] > 0 and self.screenPos['x'] < self.overlay['width'] and self.screenPos['y'] > 0 and \
                self.screenPos['y'] < self.overlay['height']
 
-    @cached_property
-    def spells(self) -> list[Spell]:
-        spells: list = []
-
-        # Handle spells
-        spellAddresses: list[int] = []
-        j: int = 0
-        while j <= 5:
-            spellAddresses.append(self.entityAddress + (j * 4))
-            j += 1
-
-        i: int = 0
-        while i < len(spellAddresses):
-            spells.append(Spell(self.pm, spellAddresses[i]))
-            i += 1
-        return spells
-
     @property
     def AiManager(self) -> AiManager:
         v1 = pymeow.read_byte(self.mem, self.entityAddress + offsets.oObjAiManager)
