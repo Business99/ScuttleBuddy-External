@@ -1,0 +1,10 @@
+{
+    "scripts": {
+        "Core.py": {
+            "playerAttackRange": {
+                "displayName": "Player Attack Range",
+                "isEnabled": true
+            }
+        }
+    }
+}

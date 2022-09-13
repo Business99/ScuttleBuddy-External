@@ -4,13 +4,20 @@ import math
 
 
 # Setup function | only runs once on script load
-def setup():
-    pass
+def setup() -> dict:
+    scriptSettings: dict = {
+        "playerAttackRange": {
+            "displayName": "Player Attack Range",
+            "isEnabled": True
+        }
+    }
+    return scriptSettings
 
 
 # OnTick function | Runs every tick
-def on_tick(lReader: LeagueReader, pymeow):
-    attack_range(lReader, pymeow)
+def on_tick(lReader: LeagueReader, pymeow, scriptSettings):
+    if scriptSettings['playerAttackRange']['isEnabled']:
+        attack_range(lReader, pymeow)
 
 
 def attack_range(lReader: LeagueReader, pymeow):
@@ -26,7 +33,7 @@ def attack_range(lReader: LeagueReader, pymeow):
             y = world_pos['y']
             z = radius * math.sin(theta) + world_pos['z']
             word_space.append(pymeow.wts_ogl(lReader.overlay, lReader.viewProjMatrix.tolist(),
-                                                  {'x': x, 'y': y, 'z': z}))
+                                             {'x': x, 'y': y, 'z': z}))
             theta += 0.01
 
         i = 0
@@ -46,7 +53,3 @@ def attack_range(lReader: LeagueReader, pymeow):
         #     #self.lReader.localPlayer,#150 * 0.3,
         #     self.pymeow.rgb("red")
         # )
-
-
-# Run the setup function
-setup()

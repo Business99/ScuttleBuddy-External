@@ -2,16 +2,20 @@ from pymem import Pymem
 import utils
 from resources import LeagueReader, LeagueStorage
 import pymeow
-from utils.settings import SETTINGS
-import scripts
 import time
 import importlib
 import os
+import json
 
 loaded_scripts: list = []
 
 
 def load_user_scripts() -> None:
+    with open("settings.json", "r") as f:
+        data = json.load(f)
+
+    data["scripts"] = {}
+
     for filename in os.listdir('scripts/enabled'):
         if filename == '__pycache__':
             continue
@@ -19,6 +23,12 @@ def load_user_scripts() -> None:
         module = importlib.import_module(f'scripts.enabled.{filename[:-3]}')
         loaded_scripts.append(module)
         print(f"Loaded: {filename}")
+
+        moduleSettings: dict = module.setup()
+        data['scripts'][filename] = moduleSettings
+
+    with open("settings.json", "w") as j:
+        json.dump(data, j, indent=4)
 
 
 if __name__ == '__main__':
@@ -39,8 +49,12 @@ if __name__ == '__main__':
         view_proj_matrix = utils.find_view_proj_matrix(pm)
         lReader: LeagueReader = LeagueReader(pm, mem, overlay, view_proj_matrix, lStorage)
 
+        with open("settings.json", "r") as f:
+            settings = json.load(f)
+
         for user_script in loaded_scripts:
-            user_script.on_tick(lReader, pymeow)
+            script_key = list(settings["scripts"].keys())[loaded_scripts.index(user_script)]
+            user_script.on_tick(lReader, pymeow, settings["scripts"][script_key])
 
         et = time.time()
 
