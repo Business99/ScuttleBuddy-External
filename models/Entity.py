@@ -4,9 +4,19 @@ from models.Spell import Spell
 from models.AiManager import AiManager
 from resources import offsets
 from functools import cached_property
+from .EntityManager import Model
 
-
-class Entity:
+class Entity(Model):
+    
+    def __add__(self, other):
+        return self.entityAddress + other
+    
+    def __radd__(self, other):
+        if other == 0:
+            return self.entityAddress                        
+        else:
+            return self.__add__(other)        
+       
     def __init__(self, pm: Pymem, mem, overlay, viewProjMatrix, entityAddress: int) -> None:
         self.pm = pm
         self.mem = mem
