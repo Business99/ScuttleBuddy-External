@@ -1,45 +1,48 @@
-# Define script specific settings
-scriptSettings: dict = {
-    'SummonerSpellESP': True
-}
+# Importing LeagueReader for typing intellisense
+from resources import LeagueReader
 
 SUMMONER_SPELL_FP = 'D:\\Hacking\\ScuttlePy\\datadragon\\summonerSpells\\'
 LAP_SUMMONER_FP = 'C:\\Github\\ScuttleBuddy-External\\datadragon\\summonerSpells\\'
 
 
-class SummonerSpells:
-    def __init__(self, lReader, pymeow):
-        self.lReader = lReader
-        self.pymeow = pymeow
-        self.font = self.pymeow.font_init(20, "ComicSans")
+# Setup function | only runs once on script load
+def setup():
+    pass
 
-        # Run script functions based on script settings
-        if scriptSettings['SummonerSpellESP']:
-            self.enemy_summonor_spells()
 
-    def enemy_summonor_spells(self):
-        for ePlayer in self.lReader.enemyPlayers:
-            if ePlayer.health <= 0 or not ePlayer.onScreen:
-                continue
+# OnTick function | Runs every tick
+def on_tick(lReader: LeagueReader, pymeow):
+    font = pymeow.font_init(20, "ComicSans")
+    enemy_summonor_spells(lReader, pymeow, font)
 
-            i = 0
-            for sumSpell in ePlayer.spells:
-                if sumSpell.isSummoner:
 
-                    texture = self.pymeow.load_texture(
-                        f"{SUMMONER_SPELL_FP}{sumSpell.name}.png")
+def enemy_summonor_spells(lReader: LeagueReader, pymeow, font):
+    for ePlayer in lReader.enemyPlayers:
+        if ePlayer.health <= 0 or not ePlayer.onScreen:
+            continue
 
-                    if i == 0:
-                        self.pymeow.draw_texture(texture, ePlayer.screenPos['x'] - 60,
-                                                 ePlayer.screenPos['y'] - 50, 30, 30)
-                        self.pymeow.font_print(self.font, ePlayer.screenPos['x'] - 60,
-                                               ePlayer.screenPos['y'] - 70,
-                                               str(int(sumSpell.readyIn)), self.pymeow.rgb('white'))
-                        i += 1
-                    else:
-                        self.pymeow.draw_texture(texture, ePlayer.screenPos['x'] - 15,
-                                                 ePlayer.screenPos['y'] - 50, 30, 30)
-                        self.pymeow.font_print(self.font, ePlayer.screenPos['x'] - 15,
-                                               ePlayer.screenPos['y'] - 70,
-                                               str(int(sumSpell.readyIn)), self.pymeow.rgb('white'))
-                        i = 0
+        i = 0
+        for sumSpell in ePlayer.spells:
+            if sumSpell.isSummoner:
+
+                texture = pymeow.load_texture(
+                    f"{SUMMONER_SPELL_FP}{sumSpell.name}.png")
+
+                if i == 0:
+                    pymeow.draw_texture(texture, ePlayer.screenPos['x'] - 60,
+                                        ePlayer.screenPos['y'] - 50, 30, 30)
+                    pymeow.font_print(font, ePlayer.screenPos['x'] - 60,
+                                      ePlayer.screenPos['y'] - 70,
+                                      str(int(sumSpell.readyIn)), pymeow.rgb('white'))
+                    i += 1
+                else:
+                    pymeow.draw_texture(texture, ePlayer.screenPos['x'] - 15,
+                                        ePlayer.screenPos['y'] - 50, 30, 30)
+                    pymeow.font_print(font, ePlayer.screenPos['x'] - 15,
+                                      ePlayer.screenPos['y'] - 70,
+                                      str(int(sumSpell.readyIn)), pymeow.rgb('white'))
+                    i = 0
+
+
+# Run the setup function
+setup()
