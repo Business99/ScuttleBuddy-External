@@ -4,6 +4,18 @@
             "playerAttackRange": {
                 "displayName": "Player Attack Range",
                 "isEnabled": true
+            },
+            "enemyAttackRange": {
+                "displayName": "Enemy Attack Ranges",
+                "isEnabled": true
+            },
+            "summonerSpellESP": {
+                "displayName": "Summoner Spell ESP",
+                "isEnabled": true
+            },
+            "gameAnalytics": {
+                "displayName": "Player Attack Range",
+                "isEnabled": false
             }
         }
     }

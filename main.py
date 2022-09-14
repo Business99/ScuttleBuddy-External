@@ -36,7 +36,6 @@ def load_user_scripts() -> None:
 if __name__ == '__main__':
     # t2 = threading.Thread(target=SettingsWindow.tkinter_window)
     # t2.start()
-    print()
     load_user_scripts()
     pm: Pymem = Pymem('League of Legends.exe')
     mem = pymeow.process_by_name("League of Legends.exe")
