@@ -40,13 +40,13 @@ def on_tick(lReader: LeagueReader, pymeow, scriptSettings) -> None:
     overlay, viewProjMatrix = lReader.overlay, lReader.viewProjMatrix
 
     if scriptSettings['playerAttackRange']['isEnabled']:
-        attack_range(pymeow, localPlayer, overlay, viewProjMatrix)
+        draw_player_attack_range(pymeow, localPlayer, overlay, viewProjMatrix)
     if scriptSettings['enemyAttackRange']['isEnabled']:
-        enemy_attack_range(pymeow, enemies, overlay, viewProjMatrix)
+        draw_enemy_attack_range(pymeow, enemies, overlay, viewProjMatrix)
     if scriptSettings['summonerSpellESP']['isEnabled']:
-        summoner_spells(pymeow, font, enemies)
+        draw_summoner_spells(pymeow, font, enemies)
     if scriptSettings['enemyTurretRangeESP']['isEnabled']:
-        enemy_turret_range(pymeow, turrets, localPlayer, overlay, viewProjMatrix)
+        draw_enemy_turret_range(pymeow, turrets, localPlayer, overlay, viewProjMatrix)
 
 
 def draw_summoner_spells(pymeow, font, enemies):
