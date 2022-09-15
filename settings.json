@@ -17,6 +17,16 @@
                 "displayName": "Turret Range ESP",
                 "isEnabled": true
             }
+        },
+        "SpellTracking.py": {
+            "DrawCDSelf": {
+                "displayName": "DrawCDSelf",
+                "isEnabled": false
+            },
+            "DrawCDEnemy": {
+                "displayName": "DrawCDEnemy",
+                "isEnabled": true
+            }
         }
     }
 }

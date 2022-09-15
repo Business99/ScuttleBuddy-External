@@ -67,6 +67,10 @@ class Entity(Model):
             self.entityAddress + offsets.oObjStatBonusAd)
 
     @cached_property
+    def bonusAttackSpeedPercent(self) -> float:
+        return self.pm.read_float(self.entityAddress + offsets.ObjAtkSpeedMulti) - 1
+
+    @cached_property
     def magicResist(self) -> float:
         return self.pm.read_float(self.entityAddress + offsets.oObjMagicRes)
 
