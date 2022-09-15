@@ -18,11 +18,7 @@ def setup() -> dict:
         "summonerSpellESP": {
             "displayName": "Summoner Spell ESP",
             "isEnabled": True
-        },
-        "gameAnalytics": {
-            "displayName": "Player Attack Range",
-            "isEnabled": False
-        },
+        }
     }
     return scriptSettings
 
@@ -41,8 +37,6 @@ def on_tick(lReader: LeagueReader, pymeow, scriptSettings) -> None:
         enemy_attack_range(lReader, pymeow, enemies)
     if scriptSettings['summonerSpellESP']['isEnabled']:
         summoner_spells(lReader, pymeow, font, enemies)
-    if scriptSettings['gameAnalytics']['isEnabled']:
-        game_analytics(lReader, pymeow)
 
 
 def summoner_spells(lReader: LeagueReader, pymeow, font, enemies):
