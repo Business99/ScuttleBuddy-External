@@ -49,7 +49,7 @@ def on_tick(lReader: LeagueReader, pymeow, scriptSettings) -> None:
         enemy_turret_range(pymeow, turrets, localPlayer, overlay, viewProjMatrix)
 
 
-def summoner_spells(pymeow, font, enemies):
+def draw_summoner_spells(pymeow, font, enemies):
     for enemy in enemies:
         if enemy.health <= 0 or not enemy.onScreen:
             continue
@@ -76,86 +76,52 @@ def summoner_spells(pymeow, font, enemies):
                     i = 0
 
 
-def attack_range(pymeow, localPlayer, overlay, viewProjMatrix):
+def draw_player_attack_range(pymeow, localPlayer, overlay, viewProjMatrix):
     if localPlayer.onScreen and localPlayer.health > 0:
         player = localPlayer
         world_pos = player.gamePos
         radius: float = localPlayer.attackRange * 1.1
-        theta: float = 0
-
-        word_space = []
-        while theta < 2 * 3.14:
-            x = world_pos['x'] + radius * math.cos(theta)
-            y = world_pos['y']
-            z = radius * math.sin(theta) + world_pos['z']
-            word_space.append(pymeow.wts_ogl(overlay, viewProjMatrix.tolist(),
-                                             {'x': x, 'y': y, 'z': z}))
-            theta += 0.01
-
-        i = 0
-        while i < len(word_space) - 1:
-            pymeow.line_v(
-                word_space[i],
-                word_space[i + 1],
-                3,
-                pymeow.rgb("blue")
-            )
-            i += 1
+        draw_circle_at(pymeow, world_pos, radius, pymeow.rgb("blue"), overlay, viewProjMatrix)
 
 
-def enemy_attack_range(pymeow, enemies, overlay, viewProjMatrix):
+def draw_enemy_attack_range(pymeow, enemies, overlay, viewProjMatrix):
     for enemy in enemies:
         if not enemy.onScreen or enemy.health <= 0:
             continue
 
         world_pos = enemy.gamePos
         radius: float = enemy.attackRange * 1.1
-        theta: float = 0
-
-        word_space = []
-        while theta < 2 * 3.14:
-            x = world_pos['x'] + radius * math.cos(theta)
-            y = world_pos['y']
-            z = radius * math.sin(theta) + world_pos['z']
-            word_space.append(pymeow.wts_ogl(overlay, viewProjMatrix.tolist(),
-                                             {'x': x, 'y': y, 'z': z}))
-            theta += 0.01
-
-        i = 0
-        while i < len(word_space) - 1:
-            pymeow.line_v(
-                word_space[i],
-                word_space[i + 1],
-                3,
-                pymeow.rgb("red")
-            )
-            i += 1
+        draw_circle_at(pymeow, world_pos, radius, pymeow.rgb("red"), overlay, viewProjMatrix)
 
 
-def enemy_turret_range(pymeow, turrets, localPlayer, overlay, viewProjMatrix):
+def draw_enemy_turret_range(pymeow, turrets, localPlayer, overlay, viewProjMatrix):
     for t in turrets:
         if not t.onScreen or t.teamId == localPlayer.teamId:
             continue
 
         world_pos = t.gamePos
         radius: float = t.turretAttackRange * 1.05
-        theta: float = 0
+        draw_circle_at(pymeow, world_pos, radius, pymeow.rgb("red"), overlay, viewProjMatrix)
+        
 
-        word_space = []
-        while theta < 2 * 3.14:
-            x = world_pos['x'] + radius * math.cos(theta)
-            y = world_pos['y']
-            z = radius * math.sin(theta) + world_pos['z']
-            word_space.append(pymeow.wts_ogl(overlay, viewProjMatrix.tolist(),
-                                             {'x': x, 'y': y, 'z': z}))
-            theta += 0.01
+def draw_circle_at(pymeow, pos, radius, color, overlay, viewProjMatrix):
+    theta: float = 0
 
-        i = 0
-        while i < len(word_space) - 1:
-            pymeow.line_v(
-                word_space[i],
-                word_space[i + 1],
-                3,
-                pymeow.rgb("red")
-            )
-            i += 1
+    word_space = []
+    while theta < 2 * 3.14:
+        x = pos['x'] + radius * math.cos(theta)
+        y = pos['y']
+        z = radius * math.sin(theta) + pos['z']
+        word_space.append(pymeow.wts_ogl(overlay, viewProjMatrix.tolist(),
+                                         {'x': x, 'y': y, 'z': z}))
+        theta += 0.01
+
+    i = 0
+    while i < len(word_space) - 1:
+        pymeow.line_v(
+            word_space[i],
+            word_space[i + 1],
+            3,
+            color
+        )
+        i += 1
