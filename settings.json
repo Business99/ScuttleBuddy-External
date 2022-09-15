@@ -13,7 +13,7 @@
                 "displayName": "Summoner Spell ESP",
                 "isEnabled": true
             },
-            "turretRangeESP": {
+            "enemyTurretRangeESP": {
                 "displayName": "Turret Range ESP",
                 "isEnabled": true
             }
