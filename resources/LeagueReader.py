@@ -1,6 +1,7 @@
 from pymem import Pymem
 from models import PlayerEntity
 from models.Minion import MinionEntity
+from models.Turret import TurretEntity
 from resources import offsets, LeagueStorage
 from resources.StructureReader import StructureReader
 from functools import cached_property
@@ -21,6 +22,12 @@ class LeagueReader:
             m = MinionEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix, minion_addr)
             if m.health > 0:
                 yield m
+
+    @cached_property
+    def turrets(self) -> list[TurretEntity]:
+        allTurretAddrs: list[int] = StructureReader.read_v_table(self.pm, self.lStorage.turretManagerAddr)
+        for turretAddr in allTurretAddrs:
+            yield TurretEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix, turretAddr)
 
     @cached_property
     def localPlayer(self) -> PlayerEntity:

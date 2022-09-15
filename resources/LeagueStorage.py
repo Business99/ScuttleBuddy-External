@@ -9,3 +9,4 @@ class LeagueStorage:
         self.localPlayerAddr: int = self.pm.read_int(self.pm.base_address + offsets.oLocalPlayer)
         self.heroManagerAddr: int = self.pm.read_int(self.pm.base_address + offsets.oHeroManager)
         self.minion_manager_addr: int = self.pm.read_int(self.pm.base_address + offsets.oMinionList)
+        self.turretManagerAddr: int = self.pm.read_int(self.pm.base_address + offsets.oTurretList)

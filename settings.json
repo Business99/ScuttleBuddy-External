@@ -13,9 +13,9 @@
                 "displayName": "Summoner Spell ESP",
                 "isEnabled": true
             },
-            "gameAnalytics": {
-                "displayName": "Player Attack Range",
-                "isEnabled": false
+            "turretRangeESP": {
+                "displayName": "Turret Range ESP",
+                "isEnabled": true
             }
         }
     }

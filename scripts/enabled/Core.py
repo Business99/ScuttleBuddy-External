@@ -1,5 +1,8 @@
 # Importing LeagueReader for typing intellisense
 from resources import LeagueReader
+from models import PlayerEntity
+from models.Turret import TurretEntity
+from scripts.helpers import Draw
 import math
 import os
 
@@ -18,6 +21,10 @@ def setup() -> dict:
         "summonerSpellESP": {
             "displayName": "Summoner Spell ESP",
             "isEnabled": True
+        },
+        "enemyTurretRangeESP": {
+            "displayName": "Turret Range ESP",
+            "isEnabled": True
         }
     }
     return scriptSettings
@@ -27,19 +34,22 @@ def setup() -> dict:
 def on_tick(lReader: LeagueReader, pymeow, scriptSettings) -> None:
     font = pymeow.font_init(20, "ComicSans")
 
-    enemies: list = []
-    for enemy in lReader.enemyPlayers:
-        enemies.append(enemy)
+    enemies: list[PlayerEntity] = [enemy for enemy in lReader.enemyPlayers]
+    turrets: list[TurretEntity] = [turret for turret in lReader.turrets]
+    localPlayer: PlayerEntity = lReader.localPlayer
+    overlay, viewProjMatrix = lReader.overlay, lReader.viewProjMatrix
 
     if scriptSettings['playerAttackRange']['isEnabled']:
-        attack_range(lReader, pymeow)
+        attack_range(pymeow, localPlayer, overlay, viewProjMatrix)
     if scriptSettings['enemyAttackRange']['isEnabled']:
-        enemy_attack_range(lReader, pymeow, enemies)
+        enemy_attack_range(pymeow, enemies, overlay, viewProjMatrix)
     if scriptSettings['summonerSpellESP']['isEnabled']:
-        summoner_spells(lReader, pymeow, font, enemies)
+        summoner_spells(pymeow, font, enemies)
+    if scriptSettings['enemyTurretRangeESP']['isEnabled']:
+        enemy_turret_range(pymeow, turrets, localPlayer, overlay, viewProjMatrix)
 
 
-def summoner_spells(lReader: LeagueReader, pymeow, font, enemies):
+def summoner_spells(pymeow, font, enemies):
     for enemy in enemies:
         if enemy.health <= 0 or not enemy.onScreen:
             continue
@@ -66,11 +76,11 @@ def summoner_spells(lReader: LeagueReader, pymeow, font, enemies):
                     i = 0
 
 
-def attack_range(lReader: LeagueReader, pymeow):
-    if lReader.localPlayer.onScreen and lReader.localPlayer.health > 0:
-        player = lReader.localPlayer
+def attack_range(pymeow, localPlayer, overlay, viewProjMatrix):
+    if localPlayer.onScreen and localPlayer.health > 0:
+        player = localPlayer
         world_pos = player.gamePos
-        radius: float = lReader.localPlayer.attackRange * 1.1
+        radius: float = localPlayer.attackRange * 1.1
         theta: float = 0
 
         word_space = []
@@ -78,7 +88,7 @@ def attack_range(lReader: LeagueReader, pymeow):
             x = world_pos['x'] + radius * math.cos(theta)
             y = world_pos['y']
             z = radius * math.sin(theta) + world_pos['z']
-            word_space.append(pymeow.wts_ogl(lReader.overlay, lReader.viewProjMatrix.tolist(),
+            word_space.append(pymeow.wts_ogl(overlay, viewProjMatrix.tolist(),
                                              {'x': x, 'y': y, 'z': z}))
             theta += 0.01
 
@@ -93,7 +103,7 @@ def attack_range(lReader: LeagueReader, pymeow):
             i += 1
 
 
-def enemy_attack_range(lReader: LeagueReader, pymeow, enemies):
+def enemy_attack_range(pymeow, enemies, overlay, viewProjMatrix):
     for enemy in enemies:
         if not enemy.onScreen or enemy.health <= 0:
             continue
@@ -107,7 +117,7 @@ def enemy_attack_range(lReader: LeagueReader, pymeow, enemies):
             x = world_pos['x'] + radius * math.cos(theta)
             y = world_pos['y']
             z = radius * math.sin(theta) + world_pos['z']
-            word_space.append(pymeow.wts_ogl(lReader.overlay, lReader.viewProjMatrix.tolist(),
+            word_space.append(pymeow.wts_ogl(overlay, viewProjMatrix.tolist(),
                                              {'x': x, 'y': y, 'z': z}))
             theta += 0.01
 
@@ -122,5 +132,30 @@ def enemy_attack_range(lReader: LeagueReader, pymeow, enemies):
             i += 1
 
 
-def game_analytics(lReader: LeagueReader, pymeow):
-    pass
+def enemy_turret_range(pymeow, turrets, localPlayer, overlay, viewProjMatrix):
+    for t in turrets:
+        if not t.onScreen or t.teamId == localPlayer.teamId:
+            continue
+
+        world_pos = t.gamePos
+        radius: float = t.turretAttackRange * 1.05
+        theta: float = 0
+
+        word_space = []
+        while theta < 2 * 3.14:
+            x = world_pos['x'] + radius * math.cos(theta)
+            y = world_pos['y']
+            z = radius * math.sin(theta) + world_pos['z']
+            word_space.append(pymeow.wts_ogl(overlay, viewProjMatrix.tolist(),
+                                             {'x': x, 'y': y, 'z': z}))
+            theta += 0.01
+
+        i = 0
+        while i < len(word_space) - 1:
+            pymeow.line_v(
+                word_space[i],
+                word_space[i + 1],
+                3,
+                pymeow.rgb("red")
+            )
+            i += 1
