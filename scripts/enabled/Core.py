@@ -2,6 +2,7 @@
 from resources import LeagueReader
 from models import PlayerEntity
 from models.Turret import TurretEntity
+from models.Ward import WardEntity
 from scripts.helpers import Draw
 import math
 import os
@@ -37,6 +38,7 @@ def on_tick(lReader: LeagueReader, pymeow, scriptSettings) -> None:
     enemies: list[PlayerEntity] = [enemy for enemy in lReader.enemyPlayers]
     turrets: list[TurretEntity] = [turret for turret in lReader.turrets]
     localPlayer: PlayerEntity = lReader.localPlayer
+    wards: list[WardEntity] = [ward for ward in lReader.wards]
     overlay, viewProjMatrix = lReader.overlay, lReader.viewProjMatrix
 
     if scriptSettings['playerAttackRange']['isEnabled']:
