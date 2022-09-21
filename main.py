@@ -8,6 +8,8 @@ import os
 import json
 from ui import SettingsWindow
 import threading
+from functools import cache
+from pymem import exception as pymem_exception
 
 loaded_scripts: list = []
 
@@ -32,6 +34,38 @@ def load_user_scripts() -> None:
     with open(os.path.abspath("settings.json"), "w") as j:
         json.dump(data, j, indent=4)
 
+
+class Client(LeagueReader):
+    
+    WINDOW_NAME = "League of Legends (TM) Client"
+    PROCESS_NAME = "League of Legends.exe"
+    
+    def __init__(self) -> None:
+        self.overlay = pymeow.overlay_init(Client.WINDOW_NAME)
+        self.overlay_font = pymeow.font_init(20, "ComicSans")
+        self.mem = self._mem()
+        self.pm = self._pm
+        self.lStorage: LeagueStorage = LeagueStorage(self.mem)
+        
+        
+    @classmethod    
+    @property
+    @cache
+    def _pm(self) -> Pymem:
+        while True:
+            try:                
+                return Pymem("League of Legends.exe")
+            except pymem_exception.ProcessNotFound:
+                print('Client - Waiting game to start...')
+                time.sleep(1) 
+    
+    def _mem(self):
+        while True: 
+            try:
+                return pymeow.process_by_name(Client.PROCESS_NAME)
+            except Exception as e:
+                print(f'Client - Process not found, waiting...')
+                time.sleep(1)
 
 if __name__ == '__main__':
     # t2 = threading.Thread(target=SettingsWindow.tkinter_window)
