@@ -4,8 +4,8 @@ from pymem import Pymem
 
 
 class PlayerEntity(Entity):
-    def __init__(self, pm: Pymem, mem, overlay, viewProjMatrix, entityAddress: int):
-        super().__init__(pm, mem, overlay, viewProjMatrix, entityAddress)
+    def __init__(self,*args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     @cached_property
     def spells(self) -> list[Spell]:

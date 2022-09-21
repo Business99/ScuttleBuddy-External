@@ -19,7 +19,12 @@ class LeagueReader:
         self.lStorage: LeagueStorage = lStorage
 
         self.__ward_names: list[str] = ["BlueTrinket", "JammerDevice", "YellowTrinket"]
-
+        self.__ignored__entities: list[str] = [
+            'PreSeason_Turret_Shield',
+            'SRU_Plant_Vision',
+            'SRU_Plant_Satchel'
+        ]
+    
     @cached_property
     def minions(self) -> list[MinionEntity]:
         for entity in self.get_non_players():

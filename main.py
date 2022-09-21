@@ -47,7 +47,8 @@ if __name__ == '__main__':
 
     # pymeow.set_foreground("League of Legends (TM) Client")
 
-    while pymeow.overlay_loop(overlay):
+    while pymeow.overlay_loop(overlay):        
+
         st = time.time()
 
         view_proj_matrix = utils.find_view_proj_matrix(pm)

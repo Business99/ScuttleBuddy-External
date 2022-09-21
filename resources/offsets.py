@@ -1,14 +1,14 @@
 # Game
-oGameTime: int = 0x313AFF0 #0x3111E68
-oViewProjMatrix: int = 0x316F328 #0x3148A20
-oRenderer: int = 0x3174DF4 #0x314B90C
+oGameTime: int = 0x3136040 #0x3111E68
+oViewProjMatrix: int = 0x316A730 #0x3148A20
+oRenderer: int = 0x31701FC #0x314B90C
 RendererWidth: int = 0x8
 RendererHeight: int = 0xc
 
 # Entities / Managers
-oLocalPlayer: int = 0x3141554 #0x3118DDC
-oHeroManager: int = 0x18A50D0 #0x187BF54
-oMinionList: int = 0x24F2850
+oLocalPlayer: int = 0x313D26C 
+oHeroManager: int = 0x18A0014 
+oMinionList: int = 0x24ED788
 oTurretList: int = 0x3139D5C
 
 # Missile
@@ -19,7 +19,7 @@ ObjMissileSpellCast = 0x250
 # Player Entity
 oObjTeamId: int = 0x0034 #0x0034
 oObjPlayerName: int = 0x54 + 30
-oObjName: int = 0x2D3C #0x2BD4
+oObjName: int = 0x2D5C #0x2BD4
 oObjLevel: int = 0x351C #0x33B4
 oObjPosition: int = 0x01DC #0x01DC  # Vector 3
 oObjVisible: int = 0x0274 #0x0274
@@ -44,7 +44,7 @@ oObjLethality: int = statBase + 0x1C
 statBase2: int = statBase + 0x124
 ObjBaseAtk: int = 0X1354
 oObjStatAttackRange: int = statBase2 + 0x8
-oObjAtkRange: int = 0X139C
+oObjAtkRange: int = 0x139C
 ObjAtkSpeedMulti: int = 0x1350
 ObjRecallState: int = 0x0D90
 ObjNetworkID: int = 0xB4
