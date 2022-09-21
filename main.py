@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
         view_proj_matrix = utils.find_view_proj_matrix(pm)
         lReader: LeagueReader = LeagueReader(pm, mem, overlay, view_proj_matrix, lStorage)
-        lReader.get_attack_speed(lReader.localPlayer)
+        
         with open(os.path.abspath("settings.json"), "r") as f:
             settings = json.load(f)
 
