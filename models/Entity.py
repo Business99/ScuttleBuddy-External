@@ -104,7 +104,7 @@ class Entity(Model):
 
     @cached_property
     def attackRange(self) -> float:
-        return self.pm.read_float(self.entityAddress + offsets.oObjStatAttackRange)
+        return self.pm.read_float(self.entityAddress + offsets.oObjAtkRange)
 
     @cached_property
     def gamePos(self) -> dict:
