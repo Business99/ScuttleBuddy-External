@@ -1,25 +1,21 @@
 # Game
-oGameTime: int = 0x313AFF0 #0x3111E68
-oViewProjMatrix: int = 0x316F328 #0x3148A20
-oRenderer: int = 0x3174DF4 #0x314B90C
+oGameTime: int = 0x3136040 #0x3111E68
+oViewProjMatrix: int = 0x316A730 #0x3148A20
+oRenderer: int = 0x31701FC #0x314B90C
 RendererWidth: int = 0x8
 RendererHeight: int = 0xc
 
 # Entities / Managers
-oLocalPlayer: int = 0x3141554 #0x3118DDC
-oHeroManager: int = 0x18A50D0 #0x187BF54
-oMinionList: int = 0x24F2850
-oTurretList: int = 0x3139D5C
+oLocalPlayer: int = 0x313D26C 
+oHeroManager: int = 0x18A0014 
+oMinionList: int = 0x24ED788
+oTurretList: int = 0x3134C94
 
-# Missile
-oMissileList: int = 0x3142288
-ObjMissileName = 0x54
-ObjMissileSpellCast = 0x250
 
 # Player Entity
 oObjTeamId: int = 0x0034 #0x0034
 oObjPlayerName: int = 0x54 + 30
-oObjName: int = 0x2D3C #0x2BD4
+oObjName: int = 0x2D5C #0x2BD4
 oObjLevel: int = 0x351C #0x33B4
 oObjPosition: int = 0x01DC #0x01DC  # Vector 3
 oObjVisible: int = 0x0274 #0x0274
@@ -29,29 +25,27 @@ oObjMana: int = 0x029C #0x029C
 oObjMaxMana: int = 0x02AC #0x02AC
 
 # Player Stats
-statBase: int = 0x1270
+#statBase: int = 0x1270 # ???
 oObjStatAp: int = 0x1750
 oObjStatBonusAd: int = 0x12CC
 oObjStatBaseAd: int = 0x1358
+oObjMagicPenFlat: int = 0x1270
+oObjMagicPenPercent: int = oObjMagicPenFlat + 0x8
 oObjArmor: int = 0x137C
-oObjArmorPen: int = statBase + 0x4
+oObjArmorPen: int = oObjMagicPenFlat + 0x4
 ObjBonusArmor = 0X1380
 oObjMagicRes: int = 0x1384
 ObjBonusMagicRes = 0X1388
-oObjMagicPenFlat: int = statBase + 0x0
-oObjMagicPenPercent: int = statBase + 0x8
-oObjLethality: int = statBase + 0x1C
-statBase2: int = statBase + 0x124
-ObjBaseAtk: int = 0X1354
-oObjStatAttackRange: int = statBase2 + 0x8
-oObjAtkRange: int = 0X139C
+oObjLethality: int = oObjMagicPenFlat + 0x1C
+ObjBaseAd: int = 0X1354
+oObjAtkRange: int = 0x139C
 ObjAtkSpeedMulti: int = 0x1350
 ObjRecallState: int = 0x0D90
 ObjNetworkID: int = 0xB4
 oVisibility: int = 0x274
 ObjMoveSpeed: int = 0X1394
-ObjCrit: int = 0x1850
-ObjCritMulti: int = 0x12B8
+ObjCrit: int = 0x1370
+ObjCritMulti: int = 0x1360
 ObjIsMoving: int = 0x32E7
 
 # Spells
@@ -111,16 +105,19 @@ ObjectMapNodeNetId: int = 0x10
 ObjectMapNodeObject: int = 0x14
 
 MapMissileCount: int = 0X2
-MapMissileRoot: int = 0x4
+MapMissileRoot: int = 0x28
 MapMissileKey: int = 0x10
 MapMissileVal: int = 0x14
 
-MinimapObject: int = 0x3138904
-MinimapObjectHud: int = 0x12C
+MinimapObject: int = 0x313383C
+MinimapObjectHud: int = 0x128
 MinimapHudPos: int = 0x3C
-MinimapHudSize: int = 0x48
+MinimapHudSize: int = 0x44
 
 # Missile
+oMissileList: int = 0x313D2B4
+ObjMissileName = 0x54
+ObjMissileSpellCast = 0x250
 MissileSpellInfo: int = 0x0260
 MissileSrcIdx: int = 0x2C4
 MissileDestIdx: int = 0X318
@@ -137,7 +134,8 @@ MissileEndPos: int = 0x02E8
 # AiManagerDashSpeed = 0x1F8;
 
 # Others
-ZoomClass: int = 0x313A6D4
+UnderMouseObject: int = 0x24ED8FC
+ZoomClass: int = 0x31012BC
 MaxZoom: int = 0x20
 CurrentDashSpeed: int = 0x1F8
 IsDashing: int = 0x214
@@ -145,22 +143,22 @@ IsMoving: int = 0x1C0
 NavBegin: int = 0x1CC
 NavEnd: int = 0x1D8 
 ServerPos: int = 0x2EC
-Velocity: int = 0x2F0
+Velocity: int = 0x2f8
 
 ObjSpawnCount: int = 0x288
 ObjSrcIndex: int = 0x294
-ObjAbilityHaste: int = 0x119C
+ObjAbilityHaste: int = 0x16A0
 ObjSpellBook: int = 0x2950
-ObjTransformation: int = 0X16A0
+ObjTransformation: int = 0x3070
 ObjExpiry: int = 0x298
 
 ObjTargetable: int = 0xD04
 ObjInvulnerable: int = 0x3D4
-ObjDirection: int = 0x1F4
-ObjItemList: int = 0x33E8
-ObjExpierience: int = 0x337C
+ObjDirection: int = 0x1AD0
+ObjItemList: int = 0x3588
+# ?? ObjExpierience: int = 0x337C
 ObjMagicPen: int = 0X1270
-ObjAdditionalApMulti: int = 0x1248
+ObjAdditionalApMulti: int = 0x12E0
 ObjManaRegen: int = 0x11E0
 ObjHealthRegen: int = 0X1390
 
@@ -174,3 +172,4 @@ oAiManagerIsMoving: int = 0x1C0
 oAiManagerIsDashing: int = 0x214
 oAiManagerCurrentSegment: int = 0x1C4
 oAiManagerDashSpeed: int = 0x1F8
+AiManagerDashPos:int = 0x230
