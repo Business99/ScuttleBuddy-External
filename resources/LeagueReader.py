@@ -10,7 +10,7 @@ from models.Minion import MinionEntity
 from models.Turret import TurretEntity
 from models.Ward import WardEntity
 from models.Monster import MonsterEntity
-from resources import offsets, LeagueStorage
+from resources import Offsets, LeagueStorage
 from resources.StructureReader import StructureReader
 from functools import cached_property, cache
 
@@ -23,26 +23,19 @@ DEFAULT_WINDUP = 0.3
 class LeagueReader:
     
     champs_data = None
+    __ward_names: list[str] = ["BlueTrinket", "JammerDevice", "YellowTrinket"]
+    __ignored__entities: list[str] = [
+        'PreSeason_Turret_Shield',
+        'SRU_Plant_Vision',
+        'SRU_Plant_Satchel'
+    ]
     
-    def __init__(self, pm: Pymem, mem, overlay, viewProjMatrix, lStorage):
-        self.pm = pm
-        self.mem = mem
-        self.overlay = overlay
-        self.viewProjMatrix = viewProjMatrix
-        self.lStorage: LeagueStorage = lStorage
-
-        self.__ward_names: list[str] = ["BlueTrinket", "JammerDevice", "YellowTrinket"]
-        self.__ignored__entities: list[str] = [
-            'PreSeason_Turret_Shield',
-            'SRU_Plant_Vision',
-            'SRU_Plant_Satchel'
-        ]
-    
+    @property
     def enemy_minions(self) -> list[MinionEntity]:        
-        lp_team_id = self.local_player.team_id
+        lp_team_id = self.localPlayer.teamId
         for minion in self.get_non_players():
-            if minion.teamId != lp_team_id and minion.is_alive and minion.name not in self.__ignored__entities:
-                yield MinionEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix, minion.entityAddress)
+            if minion.teamId != lp_team_id and minion.is_alive:
+                yield MinionEntity(self.pm, self.mem, self.overlay, self.view_proj_matrix, minion.entityAddress)
 
     
     @cached_property
@@ -73,9 +66,9 @@ class LeagueReader:
             yield TurretEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix, turretAddr)
 
 
-    @cached_property
+    @property
     def localPlayer(self) -> PlayerEntity:
-        return PlayerEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix, self.lStorage.localPlayerAddr)
+        return PlayerEntity(self.pm, self.mem, self.overlay, self.view_proj_matrix, self.lStorage.localPlayerAddr)
 
 
     @cached_property
@@ -95,14 +88,14 @@ class LeagueReader:
     def get_players(self) -> list[PlayerEntity]:
         allChampAddrs: list[int] = StructureReader.read_v_table(self.pm, self.lStorage.heroManagerAddr)
         for champ in allChampAddrs:
-            yield PlayerEntity(self.pm, self.mem, self.overlay, self.viewProjMatrix, champ)
+            yield PlayerEntity(self.pm, self.mem, self.overlay, self.view_proj_matrix, champ)
 
 
     def get_non_players(self) -> list[Entity]:
         allAddrs: list[int] = StructureReader.read_v_table(self.pm, self.lStorage.minion_manager_addr)
         for addr in allAddrs:
-            e: Entity = Entity(self.pm, self.mem, self.overlay, self.viewProjMatrix, addr)
-            if 'PreSeason' not in e.name:
+            e: Entity = Entity(self.pm, self.mem, self.overlay, self.view_proj_matrix, addr)
+            if e.name not in self.__ignored__entities:
                 yield e
 
     
@@ -127,5 +120,22 @@ class LeagueReader:
     
     @cache
     @wrapper_root_key
-    def get_attack_speed(self, champion: PlayerEntity, data) -> float:
+    def get_windup(self, champion:PlayerEntity, data) -> float:
+        basic_attack = data['basicAttack']    
+        windup_percent = 0.3
+        windup_modifier = 0.        
+        if 'mAttackDelayCastOffsetPercent' in basic_attack:
+            windup_percent = basic_attack['mAttackDelayCastOffsetPercent'] + DEFAULT_WINDUP
+        if 'mAttackDelayCastOffsetPercentAttackSpeedRatio' in basic_attack:
+            windup_modifier = basic_attack['mAttackDelayCastOffsetPercentAttackSpeedRatio']
+        return windup_percent, windup_modifier
+    
+    @cache
+    @wrapper_root_key
+    def get_base_attack_speed(self, champion: PlayerEntity, data) -> float:
         return data['attackSpeed'], data['attackSpeedRatio']
+    
+    @cache
+    @wrapper_root_key
+    def get_attack_speed(self, champion: PlayerEntity, data) -> float:
+        return data['attackSpeed'] * champion.attack_speed_bonus #, data['attackSpeedRatio']

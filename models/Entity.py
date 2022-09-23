@@ -2,7 +2,7 @@ import pymeow
 from pymem import Pymem
 from models.Spell import Spell
 from models.AiManager import AiManager
-from resources import offsets
+from resources import Offsets
 from functools import cached_property
 from .EntityManager import Model
 
@@ -27,7 +27,7 @@ class Entity(Model):
         
     @cached_property
     def nameAddr(self) -> int:
-        return self.pm.read_int(self.entityAddress + offsets.oObjName)
+        return self.pm.read_int(self.entityAddress + Offsets.oObjName)
 
     @cached_property
     def name(self) -> str:
@@ -35,19 +35,19 @@ class Entity(Model):
 
     @cached_property
     def level(self) -> int:
-        return self.pm.read_int(self.entityAddress + offsets.oObjLevel)
+        return self.pm.read_int(self.entityAddress + Offsets.oObjLevel)
 
     @cached_property
     def teamId(self) -> int:
-        return self.pm.read_int(self.entityAddress + offsets.oObjTeamId)
+        return self.pm.read_int(self.entityAddress + Offsets.oObjTeamId)
 
     @cached_property
     def isTargetable(self) -> bool:
-        return self.pm.read_bool(self.entityAddress + offsets.ObjTargetable)
+        return self.pm.read_bool(self.entityAddress + Offsets.ObjTargetable)
 
     @cached_property
     def health(self) -> float:
-        return self.pm.read_float(self.entityAddress + offsets.oObjHealth)
+        return self.pm.read_float(self.entityAddress + Offsets.oObjHealth)
 
     @cached_property
     def is_alive(self) -> bool:
@@ -55,60 +55,60 @@ class Entity(Model):
 
     @cached_property
     def maxHealth(self) -> float:
-        return self.pm.read_float(self.entityAddress + offsets.oObjMaxHealth)
+        return self.pm.read_float(self.entityAddress + Offsets.oObjMaxHealth)
 
     @cached_property
     def mana(self) -> float:
-        return self.pm.read_float(self.entityAddress + offsets.oObjMana)
+        return self.pm.read_float(self.entityAddress + Offsets.oObjMana)
 
     @cached_property
     def maxMana(self) -> float:
-        return self.pm.read_float(self.entityAddress + offsets.oObjMaxMana)
+        return self.pm.read_float(self.entityAddress + Offsets.oObjMaxMana)
 
     @cached_property
     def ap(self) -> float:
-        return self.pm.read_float(self.entityAddress + offsets.oObjStatAp)
+        return self.pm.read_float(self.entityAddress + Offsets.oObjStatAp)
 
     @cached_property
     def ad(self) -> float:
-        return self.pm.read_float(self.entityAddress + offsets.oObjStatBaseAd) + self.pm.read_float(
-            self.entityAddress + offsets.oObjStatBonusAd)
+        return self.pm.read_float(self.entityAddress + Offsets.oObjStatBaseAd) + self.pm.read_float(
+            self.entityAddress + Offsets.oObjStatBonusAd)
 
     @cached_property
     def bonusAttackSpeedPercent(self) -> float:
-        return self.pm.read_float(self.entityAddress + offsets.ObjAtkSpeedMulti) - 1
+        return self.pm.read_float(self.entityAddress + Offsets.ObjAtkSpeedMulti) - 1
 
     @cached_property
     def magicResist(self) -> float:
-        return self.pm.read_float(self.entityAddress + offsets.oObjMagicRes)
+        return self.pm.read_float(self.entityAddress + Offsets.oObjMagicRes)
 
     @cached_property
     def armor(self) -> float:
-        return self.pm.read_float(self.entityAddress + offsets.oObjArmor)
+        return self.pm.read_float(self.entityAddress + Offsets.oObjArmor)
 
     @cached_property
     def magicPenFlat(self) -> float:
-        return self.pm.read_float(self.entityAddress + offsets.oObjMagicPenFlat)
+        return self.pm.read_float(self.entityAddress + Offsets.oObjMagicPenFlat)
 
     @cached_property
     def magicPenPercent(self) -> float:
-        return (1 - self.pm.read_float(self.entityAddress + offsets.oObjMagicPenPercent)) * 100
+        return (1 - self.pm.read_float(self.entityAddress + Offsets.oObjMagicPenPercent)) * 100
 
     @cached_property
     def armorPenPercent(self) -> float:
-        return (1 - self.pm.read_float(self.entityAddress + offsets.oObjArmorPen)) * 100
+        return (1 - self.pm.read_float(self.entityAddress + Offsets.oObjArmorPen)) * 100
 
     @cached_property
     def lethality(self) -> float:
-        return self.pm.read_float(self.entityAddress + offsets.oObjLethality)
+        return self.pm.read_float(self.entityAddress + Offsets.oObjLethality)
 
     @cached_property
     def attackRange(self) -> float:
-        return self.pm.read_float(self.entityAddress + offsets.oObjAtkRange)
+        return self.pm.read_float(self.entityAddress + Offsets.oObjAtkRange) 
 
     @cached_property
     def gamePos(self) -> dict:
-        return pymeow.read_vec3(self.mem, self.entityAddress + offsets.oObjPosition)
+        return pymeow.read_vec3(self.mem, self.entityAddress + Offsets.oObjPosition)
 
     @cached_property
     def screenPos(self) -> dict:
@@ -120,7 +120,7 @@ class Entity(Model):
 
     @cached_property
     def isVisible(self) -> bool:
-        return self.pm.read_bool(self.entityAddress + offsets.oObjVisible)
+        return self.pm.read_bool(self.entityAddress + Offsets.oObjVisible)
 
     @cached_property
     def onScreen(self):
@@ -129,8 +129,8 @@ class Entity(Model):
 
     @property
     def AiManager(self) -> AiManager:
-        v1 = pymeow.read_byte(self.mem, self.entityAddress + offsets.oObjAiManager)
-        v2 = self.entityAddress + offsets.oObjAiManager - 8
+        v1 = pymeow.read_byte(self.mem, self.entityAddress + Offsets.oObjAiManager)
+        v2 = self.entityAddress + Offsets.oObjAiManager - 8
         v3 = self.pm.read_int(v2 + 4)
         v4 = self.pm.read_int(v2 + (4 * v1 + 12))
         v4 = v4 ^ ~v3
