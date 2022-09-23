@@ -1,6 +1,6 @@
 from functools import cached_property
 from pymem import Pymem
-from resources import offsets
+from resources import Offsets
 
 
 class GameState:
@@ -9,5 +9,5 @@ class GameState:
 
     @cached_property
     def gameTime(self) -> float:
-        return self.pm.read_float(self.pm.base_address + offsets.oGameTime)
+        return self.pm.read_float(self.pm.base_address + Offsets.oGameTime)
 

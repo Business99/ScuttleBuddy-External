@@ -1,6 +1,6 @@
 from . import Entity
 from pymem import Pymem
-from resources import offsets
+from resources import Offsets
 
 class MinionEntity(Entity):       
     def __init__(self, *args, **kwargs):

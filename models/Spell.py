@@ -1,5 +1,5 @@
 from pymem import Pymem
-from resources import offsets
+from resources import Offsets
 from functools import cache, cached_property
 
 
@@ -10,24 +10,24 @@ class Spell:
 
     @cached_property
     def spellSlots(self) -> int:
-        return self.pm.read_int(self.spellAddr + offsets.oSpellSlots)
+        return self.pm.read_int(self.spellAddr + Offsets.oSpellSlots)
 
     @cached_property
     def info(self) -> int:
-        return self.pm.read_int(self.spellSlots + offsets.oSpellInfo)
+        return self.pm.read_int(self.spellSlots + Offsets.oSpellInfo)
 
     @cached_property
     def data(self) -> int:
-        return self.pm.read_int(self.info + offsets.oSpellInfoData)
+        return self.pm.read_int(self.info + Offsets.oSpellInfoData)
 
     # TODO: Implement this in an outside object such as GameState.py
     @cached_property
     def gameTime(self) -> float:
-        return self.pm.read_float(self.pm.base_address + offsets.oGameTime)
+        return self.pm.read_float(self.pm.base_address + Offsets.oGameTime)
 
     @cached_property
     def readyAt(self) -> float:
-        return self.pm.read_float(self.spellSlots + offsets.oSpellReadyAt)
+        return self.pm.read_float(self.spellSlots + Offsets.oSpellReadyAt)
 
     @cached_property
     def readyIn(self) -> float:
@@ -38,11 +38,11 @@ class Spell:
 
     @cached_property
     def level(self) -> int:
-        return self.pm.read_int(self.spellSlots + offsets.oSpellLevel)
+        return self.pm.read_int(self.spellSlots + Offsets.oSpellLevel)
 
     @cached_property
     def nameAddr(self) -> int:
-        return self.pm.read_int(self.data + offsets.oSpellInfoDataName)
+        return self.pm.read_int(self.data + Offsets.oSpellInfoDataName)
 
     # TODO: Implement Smite variations, hex flash, and upgraded teleport (Band-aid fix implemented here already)
     @cached_property

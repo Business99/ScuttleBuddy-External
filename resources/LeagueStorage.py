@@ -1,12 +1,12 @@
 from pymem import Pymem
-from resources import offsets
+from resources import Offsets
 
 
 class LeagueStorage:
     def __init__(self, pm: Pymem):
         self.pm = pm
 
-        self.localPlayerAddr: int = self.pm.read_int(self.pm.base_address + offsets.oLocalPlayer)
-        self.heroManagerAddr: int = self.pm.read_int(self.pm.base_address + offsets.oHeroManager)
-        self.minion_manager_addr: int = self.pm.read_int(self.pm.base_address + offsets.oMinionList)
-        self.turretManagerAddr: int = self.pm.read_int(self.pm.base_address + offsets.oTurretList)
+        self.localPlayerAddr: int = self.pm.read_int(self.pm.base_address + Offsets.oLocalPlayer)
+        self.heroManagerAddr: int = self.pm.read_int(self.pm.base_address + Offsets.oHeroManager)
+        self.minion_manager_addr: int = self.pm.read_int(self.pm.base_address + Offsets.oMinionList)
+        self.turretManagerAddr: int = self.pm.read_int(self.pm.base_address + Offsets.oTurretList)

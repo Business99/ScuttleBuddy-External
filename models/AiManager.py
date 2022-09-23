@@ -1,6 +1,6 @@
 from pymem import Pymem
 import pymeow
-from resources import offsets
+from resources import Offsets
 from functools import cached_property
 
 
@@ -14,7 +14,7 @@ class AiManager:
 
     @cached_property
     def startPath(self) -> dict:
-        return pymeow.read_vec3(self.mem, self.managerAddr + offsets.oAiManagerStartPath)
+        return pymeow.read_vec3(self.mem, self.managerAddr + Offsets.oAiManagerStartPath)
 
     @cached_property
     def startPathScreen(self) -> dict:
@@ -27,7 +27,7 @@ class AiManager:
 
     @cached_property
     def endPath(self) -> dict:
-        return pymeow.read_vec3(self.mem, self.managerAddr + offsets.oAiManagerEndPath)
+        return pymeow.read_vec3(self.mem, self.managerAddr + Offsets.oAiManagerEndPath)
 
     @cached_property
     def endPathScreen(self):
@@ -40,12 +40,12 @@ class AiManager:
 
     @cached_property
     def isDashing(self) -> bool:
-        return self.pm.read_bool(self.managerAddr + offsets.oAiManagerIsDashing)
+        return self.pm.read_bool(self.managerAddr + Offsets.oAiManagerIsDashing)
 
     @cached_property
     def isMoving(self) -> bool:
-        return self.pm.read_bool(self.managerAddr + offsets.oAiManagerIsMoving)
+        return self.pm.read_bool(self.managerAddr + Offsets.oAiManagerIsMoving)
 
     @cached_property
     def dashSpeed(self) -> int:
-        return self.pm.read_int(self.managerAddr + offsets.oAiManagerDashSpeed)
+        return self.pm.read_int(self.managerAddr + Offsets.oAiManagerDashSpeed)

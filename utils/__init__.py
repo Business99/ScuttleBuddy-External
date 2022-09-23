@@ -1,11 +1,11 @@
-from resources import offsets
+from resources import Offsets
 from models import Entity
 import numpy as np
 import struct
 
 
 def find_view_proj_matrix(process):
-    data = process.read_bytes(process.base_address + offsets.oViewProjMatrix, 0x128)
+    data = process.read_bytes(process.base_address + Offsets.oViewProjMatrix, 0x128)
     view_matrix = list_to_matrix([float_from_buffer(data, i * 4) for i in range(16)])
     proj_matrix = list_to_matrix([float_from_buffer(data, 64 + (i * 4)) for i in range(16)])
     view_proj_matrix = np.matmul(view_matrix, proj_matrix)
