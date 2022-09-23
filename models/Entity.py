@@ -42,8 +42,8 @@ class Entity(Model):
         return self.pm.read_int(self.entityAddress + offsets.oObjTeamId)
 
     @cached_property
-    def is_targatable(self) -> bool:
-        return self.pm.read_bool(self._addr + offsets.ObjTargetable)
+    def isTargetable(self) -> bool:
+        return self.pm.read_bool(self.entityAddress + offsets.ObjTargetable)
 
     @cached_property
     def health(self) -> float:
@@ -104,7 +104,7 @@ class Entity(Model):
 
     @cached_property
     def attackRange(self) -> float:
-        return self.pm.read_float(self.entityAddress + offsets.oObjStatAttackRange)
+        return self.pm.read_float(self.entityAddress + offsets.oObjAtkRange)
 
     @cached_property
     def gamePos(self) -> dict:

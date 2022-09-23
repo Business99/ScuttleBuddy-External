@@ -1,3 +1,6 @@
-numpy==1.23.2
-Pymem==1.8.5
+gevent==21.12.0
+grequests==0.6.0
+numpy==1.23.3
+pymem==1.8.5
+requests==2.28.1
 setuptools==63.4.1
