@@ -47,19 +47,18 @@ if __name__ == '__main__':
 
     # pymeow.set_foreground("League of Legends (TM) Client")
 
-    while pymeow.overlay_loop(overlay): 
-        
-        targets = None            
+    while pymeow.overlay_loop(overlay):
+
+        targets = None
         debug = {}
         debug['Selected Mode:'] = ""
         debug['Execution time:'] = ""
-               
 
         st = time.time()
 
         view_proj_matrix = utils.find_view_proj_matrix(pm)
         lReader: LeagueReader = LeagueReader(pm, mem, overlay, view_proj_matrix, lStorage)
-        
+
         with open(os.path.abspath("settings.json"), "r") as f:
             settings = json.load(f)
 
