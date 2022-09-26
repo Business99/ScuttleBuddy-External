@@ -2,7 +2,7 @@ import mouse
 import time
 
 class Orbwalker:
-    MOVE_CLICK_DELAY = 0.05
+    MOVE_CLICK_DELAY = 0.07
     ATTACK_SPEED_CAP = 2.5
     
     def __init__(self, client) -> None:

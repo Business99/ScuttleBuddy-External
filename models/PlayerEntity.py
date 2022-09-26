@@ -15,7 +15,7 @@ class PlayerEntity(Entity):
         return self.is_alive and target.is_alive and target.isVisible
 
     def in_aa_range(self, target) -> bool:
-        return (self.attackRange * 1.2) > pymeow.vec3_distance(self.gamePos, target.gamePos)
+        return (self.attackRange * 1.2) > self.distance_to(target)
     
     def get_fastest_to_aa_kill(self, targets: list):
         can_attack = [target for target in targets if self.in_aa_range(target) and self.can_attack(target)]

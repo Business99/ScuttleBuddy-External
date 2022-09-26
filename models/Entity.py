@@ -106,6 +106,10 @@ class Entity(Model):
     def attackRange(self) -> float:
         return self.pm.read_float(self.entityAddress + Offsets.oObjAtkRange) 
 
+    def distance_to(self, entity) -> float:
+        return pymeow.vec3_distance(self.gamePos, entity.gamePos)
+    
+
     @cached_property
     def gamePos(self) -> dict:
         return pymeow.read_vec3(self.mem, self.entityAddress + Offsets.oObjPosition)

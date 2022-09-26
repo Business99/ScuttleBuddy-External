@@ -94,6 +94,15 @@ class Client(LeagueReader):
                 mode_selected = "Last Hit"
                 targets = self.enemy_minions
                 t = player.get_lasthit_aa_target(targets)                                                
+            if keyboard.is_pressed('c'):
+                mode_selected = "Harass"
+                prioritize_minions = True                
+                targets_m, targets_p  = self.enemy_minions, self.enemyPlayers
+                t_m, t_p = player.get_lasthit_aa_target(targets_m) , player.get_fastest_to_aa_kill(targets_p)
+                if t_m and t_p:
+                    t = t_m if t_m.distance_to(player) < t_p.distance_to(player) else t_p
+                else:
+                    t = t_m if t_m else t_p
             if keyboard.is_pressed(' '):   
                 mode_selected = "Attack Player"                
                 t = player.get_fastest_to_aa_kill(self.enemyPlayers)                        
