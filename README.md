@@ -3,16 +3,15 @@
 #### Please note this project is still in the early stages. Anything and everything is subject to change.
 
 # Discord + Documentation
-### [Join Here](https://discord.gg/P9VTvGCWBD)
+### [Join Here](https://discord.gg/9NyfysC4Uu)
 
 # Installation Instructions
 
 ### From Source:
-1. Clone or Fork the ScuttleBuddy-External repository
-2. Download the latest release `.zip` of the PyMeow library located [here](https://github.com/qb-0/PyMeow).
-3. Extract the contents of the `.zip` file into the ScuttleBuddy-External project folder
-4. Open your terminal and run `pip install .` to install PyMeow
-5. In the same terminal run `pip install -r requirements.txt` to install the needed dependencies
+1. Clone, Fork, or Pull the **SV-Version-2** branch
+2. Download the latest release located in the **Releases** section
+3. Place the .exe file into the **SB-Version-2** project folder
+4. Run the exe
 
-### Precompiled:
-1. *In Progress...*
+# Settings
+For now, the only way to edit settings is by modifying the setting wanted in the `settings.json` file.
