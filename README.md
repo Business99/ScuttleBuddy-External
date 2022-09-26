@@ -2,6 +2,8 @@
 ### External Scripting Platform for League of Legends
 #### Please note this project is still in the early stages. Anything and everything is subject to change.
 
+## Please go to the branch SB-Version-2
+
 # Discord + Documentation
 ### [Join Here](https://discord.gg/P9VTvGCWBD)
 
