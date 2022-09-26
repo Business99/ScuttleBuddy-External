@@ -1,8 +1,4 @@
-import gevent.monkey
-gevent.monkey.patch_all()
-
 import requests
-import grequests
 from pymem import Pymem
 from models import PlayerEntity
 from models.Entity import Entity
@@ -120,8 +116,12 @@ class LeagueReader:
             
             while 'boneco-alvo' in champions_name:
                 champions_name.remove('boneco-alvo')
-                    
-            responses = [ r.json() for r in grequests.map((grequests.get(CHAMPION_INFO_ENDPOINT.format(champion=name)) for name in champions_name), size=10)]
+
+            responses: list = []
+            for name in champions_name:
+                for r in requests.get(CHAMPION_INFO_ENDPOINT.format(champion=name)).json():
+                    responses.append(r.json())
+
             self.champs_data = { name: response for name in champions_name for response in responses for key in response.keys() if name in key.lower()}
             return self.champs_data
     
