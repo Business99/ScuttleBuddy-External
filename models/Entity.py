@@ -136,3 +136,27 @@ class Entity(Model):
         v4 = v4 ^ ~v3
         addr = self.pm.read_int(v4 + 0x8)
         return AiManager(self.pm, self.mem, self.viewProjMatrix, self.overlay, addr)
+
+    @cached_property
+    def buffs(self) -> list:
+
+        try:
+            buffsData: list = []
+
+            buffsArrayAddr: int = self.pm.read_int(self.entityAddress + offsets.ObjBuffManager + offsets.BuffManagerEntriesArray)
+
+            i = 0
+            while i < 100:
+                buffAddr: int = self.pm.read_int(buffsArrayAddr + (i * 0x8))
+
+                buff_name_ptr = self.pm.read_int(buffAddr + 0x8)
+
+                try:
+                    buff_name = self.pm.read_string(buff_name_ptr)
+                except Exception:
+                    buff_name = self.pm.read_string(buffAddr + 0x8)
+
+                i += 1
+
+        except Exception:
+            pass
