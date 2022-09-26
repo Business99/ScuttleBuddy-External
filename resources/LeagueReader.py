@@ -1,8 +1,6 @@
-import gevent.monkey
-gevent.monkey.patch_all()
 
 import requests
-import grequests
+#import grequests
 from pymem import Pymem
 from models import PlayerEntity
 from models.Entity import Entity
@@ -13,7 +11,6 @@ from models.Monster import MonsterEntity
 from resources import Offsets, LeagueStorage
 from resources.StructureReader import StructureReader
 from functools import cached_property, cache
-
 
 GAME_DATA_ENDPOINT = 'https://127.0.0.1:2999/liveclientdata/allgamedata'
 CHAMPION_INFO_ENDPOINT = 'https://raw.communitydragon.org/latest/game/data/characters/{champion}/{champion}.bin.json'
@@ -78,7 +75,7 @@ class LeagueReader:
                 yield p
 
 
-    @cached_property
+    @property
     def enemyPlayers(self) -> list[PlayerEntity]:
         for p in self.get_players():
             if p.teamId != self.localPlayer.teamId:
@@ -114,7 +111,8 @@ class LeagueReader:
             while 'boneco-alvo' in champions_name:
                 champions_name.remove('boneco-alvo')
                     
-            responses = [ r.json() for r in grequests.map((grequests.get(CHAMPION_INFO_ENDPOINT.format(champion=name)) for name in champions_name), size=10)]
+            #responses = [ r.json() for r in grequests.map((grequests.get(CHAMPION_INFO_ENDPOINT.format(champion=name)) for name in champions_name), size=10)]
+            responses = [ requests.get(CHAMPION_INFO_ENDPOINT.format(champion=name), verify=False).json() for name in champions_name]
             self.champs_data = { name: response for name in champions_name for response in responses for key in response.keys() if name in key.lower()}
             return self.champs_data
     

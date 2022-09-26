@@ -2,7 +2,7 @@ import mouse
 import time
 
 class Orbwalker:
-    MOVE_CLICK_DELAY = 0.05
+    MOVE_CLICK_DELAY = 0.07
     ATTACK_SPEED_CAP = 2.5
     
     def __init__(self, client) -> None:
@@ -51,8 +51,7 @@ class Orbwalker:
             windup_time = b_windup_time + ((c_attack_time * windup_percent) - b_windup_time) * (1+windup_modifier)
             
             self.can_move_time = game_time + windup_time
-            self.can_attack_time = game_time + (1 / attack_speed)
-         
+            self.can_attack_time = game_time + (1 / attack_speed) + windup_time
             mouse.move(stored_x, stored_y)
         elif self.can_move_time < self.client.game_time:                        
             mouse.right_click()            
