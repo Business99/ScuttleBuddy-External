@@ -95,9 +95,8 @@ class Client(LeagueReader):
                 targets = self.enemy_minions
                 t = player.get_lasthit_aa_target(targets)                                                
             if keyboard.is_pressed(' '):   
-                mode_selected = "Attack Player"
-                t = player.get_fastest_to_aa_kill(self.enemyPlayers)
-                print(t)
+                mode_selected = "Attack Player"                
+                t = player.get_fastest_to_aa_kill(self.enemyPlayers)                        
             debug['Selected Mode:'] = mode_selected
             if mode_selected:
                 orbwalker.walk(target=t, pymeow=pymeow, overlay=self.overlay)
