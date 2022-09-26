@@ -1,6 +1,4 @@
 # Importing LeagueReader for typing intellisense
-import main
-from resources import LeagueReader
 import math
 import os
 from scripts.helpers import Draw
@@ -24,7 +22,7 @@ def setup() -> dict:
 
 
 # OnTick function | Runs every tick
-def on_tick(lReader: LeagueReader, pymeow, scriptSettings) -> None:
+def on_tick(lReader, pymeow, scriptSettings) -> None:
     if scriptSettings["DrawCDSelf"]["isEnabled"]:
         draw_champion_spells(lReader.localPlayer, pymeow, lReader.viewProjMatrix)
     if scriptSettings["DrawCDEnemy"]["isEnabled"]:
