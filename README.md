@@ -15,3 +15,6 @@
 
 # Settings
 For now, the only way to edit settings is by modifying the setting wanted in the `settings.json` file.
+
+# Custom Scripting
+Please join the discord for further documentation

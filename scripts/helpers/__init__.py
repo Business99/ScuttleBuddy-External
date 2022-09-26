@@ -1,10 +1,7 @@
-from models import Entity
-
-
 # region Calculate Class
 class Calculate:
     @staticmethod
-    def calculate_magic_damage(source: Entity, target: Entity, damage: float) -> float:
+    def calculate_magic_damage(source, target, damage: float) -> float:
         targetMagicResist: float = target.magicResist
         sourceMagicPenFlat: float = source.magicPenFlat
         sourceMagicPenPerc: float = source.magicPenPercent
@@ -19,7 +16,7 @@ class Calculate:
         return damage * (100 / (100 + unknown))
 
     @staticmethod
-    def calculate_physical_damage(source: Entity, target: Entity, damage: float) -> float:
+    def calculate_physical_damage(source, target, damage: float) -> float:
         targetArmor: float = target.armor
         sourceLethality: float = source.lethality
         sourceArmorPenPerc: float = source.armorPenPercent

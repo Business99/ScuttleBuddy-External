@@ -1,9 +1,3 @@
-# Importing LeagueReader for typing intellisense
-from resources import LeagueReader
-from models import PlayerEntity
-from models.Turret import TurretEntity
-from models.Ward import WardEntity
-from scripts.helpers import Draw
 import math
 import os
 
@@ -32,13 +26,13 @@ def setup() -> dict:
 
 
 # OnTick function | Runs every tick
-def on_tick(lReader: LeagueReader, pymeow, scriptSettings) -> None:
+def on_tick(lReader, pymeow, scriptSettings) -> None:
     font = pymeow.font_init(20, "ComicSans")
 
-    enemies: list[PlayerEntity] = [enemy for enemy in lReader.enemyPlayers]
-    turrets: list[TurretEntity] = [turret for turret in lReader.turrets]
-    localPlayer: PlayerEntity = lReader.localPlayer
-    wards: list[WardEntity] = [ward for ward in lReader.wards]
+    enemies: list = [enemy for enemy in lReader.enemyPlayers]
+    turrets: list = [turret for turret in lReader.turrets]
+    localPlayer = lReader.localPlayer
+    wards: list = [ward for ward in lReader.wards]
     overlay, viewProjMatrix = lReader.overlay, lReader.viewProjMatrix
 
     if scriptSettings['playerAttackRange']['isEnabled']:
