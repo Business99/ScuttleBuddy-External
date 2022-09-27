@@ -27,7 +27,6 @@ class Spell:
     isSummoner: bool
 # endregion
 
-
 # region Entity Related
 @dataclass
 class Entity:
