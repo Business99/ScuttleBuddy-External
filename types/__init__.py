@@ -25,6 +25,24 @@ class Spell:
     level: int
     name: str
     isSummoner: bool
+
+
+@dataclass
+class Buff:
+    type: int
+
+
+@dataclass
+class AiManager:
+    startPath: dict
+    startPathScreen: dict
+    endPath: dict
+    endPathScreen: dict
+    isDashing: bool
+    isMoving: bool
+    dashSpeed: int
+
+
 # endregion
 
 # region Entity Related
@@ -53,8 +71,8 @@ class Entity:
     screenPos: dict
     isVisible: bool
     onScreen: bool
-    AiManager: None
-    buffs: list
+    AiManager: AiManager
+    buffs: list[Buff]
 
 
 @dataclass
@@ -64,5 +82,30 @@ class PlayerEntity(Entity):
 
     spells: list[Spell]
 
+
+@dataclass
+class MinionEntity(Entity):
+    def __init__(self):
+        super().__init__()
+
+
+@dataclass
+class MonsterEntity(Entity):
+    def __init__(self):
+        super().__init__()
+
+
+@dataclass
+class TurretEntity(Entity):
+    def __init__(self):
+        super().__init__()
+
+    turretAttackRange: float
+
+
+@dataclass
+class WardEntity(Entity):
+    def __init__(self):
+        super().__init__()
 
 # endregion

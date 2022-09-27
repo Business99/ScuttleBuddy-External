@@ -1,6 +1,4 @@
 # Importing LeagueReader for typing intellisense
-import math
-import os
 from scripts.helpers import Draw
 from scripts.helpers import Calculate
 
