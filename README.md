@@ -5,7 +5,7 @@
 ## Please go to the branch SB-Version-2
 
 # Discord + Documentation
-### [Join Here](https://discord.gg/P9VTvGCWBD)
+### [Join Here](https://discord.gg/8tUDX3QDgg)
 
 # Installation Instructions
 
